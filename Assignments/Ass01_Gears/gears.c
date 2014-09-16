@@ -387,13 +387,15 @@ visible(int vis)
     glutIdleFunc(NULL);
 }
 
+
+int window_size = 1000;
 int main(int argc, char *argv[])
 {
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 
   glutInitWindowPosition(0, 0);
-  glutInitWindowSize(300, 300);
+  glutInitWindowSize(window_size, window_size);
   win = glutCreateWindow("Gears");
   init(argc, argv);
 
