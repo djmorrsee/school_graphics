@@ -11,8 +11,6 @@
 #include <GL/glut.h>
 #endif
 
-int axes=0;       //  Display axes
-int mode=0;       //  Projection mode
 int th=0;         //  Azimuth of view angle
 int ph=0;         //  Elevation of view angle
 int fov=35;       //  Field of view (for perspective)
@@ -42,26 +40,7 @@ void Print(const char* format , ...)
       glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,*ch++);
 }
 
-/*
- *  Set projection
- */
-static void Project()
-{
-   //  Tell OpenGL we want to manipulate the projection matrix
-   glMatrixMode(GL_PROJECTION);
-   //  Undo previous transformations
-   glLoadIdentity();
-   //  Perspective transformation
-   if (mode)
-      gluPerspective(fov,asp,dim/4,4*dim);
-   //  Orthogonal projection
-   else
-      glOrtho(-asp*dim,+asp*dim, -dim,+dim, -dim,+dim);
-   //  Switch to manipulating the model matrix
-   glMatrixMode(GL_MODELVIEW);
-   //  Undo previous transformations
-   glLoadIdentity();
-}
+
 
 typedef struct 
 {
@@ -70,14 +49,14 @@ typedef struct
 	double z;
 } Point;
 
-
 /*  Lorenz Parameters  */
 double s  = 10;
+double _ds = 0.1;
 double b  = 2.6666;
+double _db = 0.0001;
 double r  = 28;
-
+double _dr = 0.5;
 double dt = 0.001;
-
 Point NextLorenzPoint (Point point) 
 {
 	double dx = s*(point.y-point.x);
@@ -91,7 +70,6 @@ Point NextLorenzPoint (Point point)
 
 float rate = 0.05f;
 Point color;
-
 void LerpColor () 
 {
 	color.x += rate;
@@ -106,7 +84,6 @@ void LerpColor ()
 
 const int MAX_POINTS = 100000;
 Point *points; 
-
 void draw_lorenz_points () 
 {
 
@@ -135,26 +112,34 @@ void display()
    	//  Undo previous transformations
    	glLoadIdentity();
 
-   	//  Perspective - set eye position
-   	if (mode)
-   	{
-		double Ex = 10*-dim*Sin(th)*Cos(ph);
-      		double Ey = +dim        *Sin(ph);
-      		double Ez = +dim*Cos(th)*Cos(ph);
-      		gluLookAt(50,0,50, -10,10,10 , 0,Cos(ph),0);
-   	}
-   	//  Orthogonal - set world orientation
-   	else
-   	{
-   		glRotatef(ph,1,0,0);
-      		glRotatef(th,0,1,0);
-   	}
+
+   	glRotatef(ph,1,0,0);
+      	glRotatef(th,0,1,0);
+   	
 
 	draw_lorenz_points();
 
    	glFlush();
 	glutSwapBuffers();
 	glutPostRedisplay();
+}
+
+/*
+ *  Set projection
+ */
+static void Project()
+{
+   //  Tell OpenGL we want to manipulate the projection matrix
+   glMatrixMode(GL_PROJECTION);
+   //  Undo previous transformations
+   glLoadIdentity();
+
+   glOrtho(-asp*dim,+asp*dim, -dim,+dim, -dim,+dim);
+
+   //  Switch to manipulating the model matrix
+   glMatrixMode(GL_MODELVIEW);
+   //  Undo previous transformations
+   glLoadIdentity();
 }
 
 void special(int key,int x,int y)
@@ -183,10 +168,18 @@ void special(int key,int x,int y)
 
 void key(unsigned char ch,int x,int y) 
 {
-	if (ch == 'f')
-		dim += 0.1;
-	else if (ch == 'v' && dim > 1)
-		dim -= 0.1;
+	if (ch == 'q')
+		s += _ds;
+	else if (ch == 'a')
+		s -= _ds;
+	else if (ch == 'w')
+		b += _db;
+	else if (ch == 's')
+		b -= _db;
+	else if (ch == 'e')
+		r += _dr;
+	else if (ch == 'd')
+		r -= _dr;
 	//  Reproject
    	Project();
    	//  Tell GLUT it is necessary to redisplay the scene
@@ -223,6 +216,11 @@ void init ()
 		points[i + 1] = NextLorenzPoint(points[i]);
 	}
 }
+
+void CalculatePoints () 
+{
+
+}|
 
 int window_size = 600;
 int main(int argc, char *argv[]) 
