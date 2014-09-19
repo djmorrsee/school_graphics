@@ -41,7 +41,6 @@ void Print(const char* format , ...)
 }
 
 
-
 typedef struct 
 {
 	double x;
@@ -49,28 +48,10 @@ typedef struct
 	double z;
 } Point;
 
-/*  Lorenz Parameters  */
-double s  = 10;
-double _ds = 0.1;
-double b  = 2.6666;
-double _db = 0.0001;
-double r  = 28;
-double _dr = 0.5;
-double dt = 0.001;
-Point NextLorenzPoint (Point point) 
-{
-	double dx = s*(point.y-point.x);
-	double dy = point.x*(r-point.z)-point.y;
-	double dz = point.x*point.y - b*point.z;
-	point.x += dt*dx;
-	point.y += dt*dy;
-	point.z += dt*dz;
-	return point;
-}
-
-float rate = 0.05f;
-Point color;
-void LerpColor () 
+// Color // 
+static float rate = 0.05f;
+static Point color;
+static void LerpColor () 
 {
 	color.x += rate;
 	color.y += rate;
@@ -81,10 +62,50 @@ void LerpColor ()
 	color.z = color.z > 1 ? 0 : color.z;
 }
 
+/*  Lorenz Parameters  */
+static double dt = 0.001;
 
-const int MAX_POINTS = 100000;
-Point *points; 
-void draw_lorenz_points () 
+static double s  = 10;
+static double b  = 2.6666;
+static double r  = 28;
+
+static const double _ds = 0.01;
+static const double _db = 0.00001;
+static const double _dr = 0.05;
+
+const static int MAX_POINTS = 100000;
+static Point *points; 
+
+static Point NextLorenzPoint (Point point) 
+{
+	double dx = s*(point.y-point.x);
+	double dy = point.x*(r-point.z)-point.y;
+	double dz = point.x*point.y - b*point.z;
+	point.x += dt*dx;
+	point.y += dt*dy;
+	point.z += dt*dz;
+	return point;
+}
+
+static void CalculatePoints () 
+{
+	int i;
+	double start = (double)rand()/(double)RAND_MAX;
+
+	srand(time(NULL));
+	
+	color.x = start;
+	color.y = start;
+	color.z = start;
+	
+	for (i = 0; i < MAX_POINTS - 1; ++i)
+	{
+		points[i + 1] = NextLorenzPoint(points[i]);
+	}
+}
+
+// Primary Curve Drawing Function
+static void draw_lorenz_points () 
 {
 
 	int i = 0;
@@ -103,7 +124,8 @@ void draw_lorenz_points ()
 	glEnd();
 }
 
-void display()
+// OpenGL Draw Callback
+static void display()
 {
 	//  Erase the window and the depth buffer
    	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -112,12 +134,14 @@ void display()
    	//  Undo previous transformations
    	glLoadIdentity();
 
-
    	glRotatef(ph,1,0,0);
       	glRotatef(th,0,1,0);
    	
-
 	draw_lorenz_points();
+
+	glWindowPos2i(5, 5);
+	glColor3f(1.0f,1.0f,1.0f);
+	Print("Lorenz Params - s: %f, b: %f, r: %f", s, b, r);
 
    	glFlush();
 	glutSwapBuffers();
@@ -142,7 +166,7 @@ static void Project()
    glLoadIdentity();
 }
 
-void special(int key,int x,int y)
+static void special(int key,int x,int y)
 {
 	//  Right arrow key - increase angle by 5 degrees
    	if (key == GLUT_KEY_RIGHT)
@@ -166,63 +190,64 @@ void special(int key,int x,int y)
    	glutPostRedisplay();
 }
 
-void key(unsigned char ch,int x,int y) 
+static void key(unsigned char ch,int x,int y) 
 {
-	if (ch == 'q')
+	if (ch == 'q') {
 		s += _ds;
-	else if (ch == 'a')
+		CalculatePoints();
+	}
+	else if (ch == 'a') {
 		s -= _ds;
-	else if (ch == 'w')
+		CalculatePoints();
+	}
+	else if (ch == 'w') {
 		b += _db;
-	else if (ch == 's')
+		CalculatePoints();
+	}
+	else if (ch == 's') {
 		b -= _db;
-	else if (ch == 'e')
+		CalculatePoints();
+	}
+	else if (ch == 'e') {
 		r += _dr;
-	else if (ch == 'd')
+		CalculatePoints();
+	}
+	else if (ch == 'd') {
 		r -= _dr;
+		CalculatePoints();
+	}
 	//  Reproject
    	Project();
    	//  Tell GLUT it is necessary to redisplay the scene
    	glutPostRedisplay();
 }
 
-void reshape(int width, int height) 
+static void reshape(int width, int height) 
 {
 	//  Reproject
+	asp = (double)height/(double)width;
    	Project();
-
 }
 
-void init () 
+static void init () 
 {
-	int i;
+	glDisable(GL_LIGHTING);
+
+	points = malloc(MAX_POINTS * sizeof(Point));
+
 	Point point;
 
 	point.x = 1;
 	point.y = 1;
 	point.z = 1;
 
-	points = malloc(MAX_POINTS * sizeof(Point));
 	points[0] = point;
 
-	srand(time(NULL));
-	double start = (double)rand()/(double)RAND_MAX;
-	color.x = start;
-	color.y = start;
-	color.z = start;
+	CalculatePoints();
 	
-	for (i = 0; i < MAX_POINTS - 1; ++i)
-	{
-		points[i + 1] = NextLorenzPoint(points[i]);
-	}
 }
 
-void CalculatePoints () 
-{
-
-}|
-
-int window_size = 600;
+static int window_size = 600;
 int main(int argc, char *argv[]) 
 {
 	
@@ -239,7 +264,6 @@ int main(int argc, char *argv[])
  	glutReshapeFunc(reshape);
   	glutKeyboardFunc(key);
   	glutSpecialFunc(special);
-
 
  	glutMainLoop();
 

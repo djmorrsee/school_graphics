@@ -1,0 +1,30 @@
+Lorenz Attractor Visualization
+
+Controls:
+Parameter S: 
+	Increase: 'q'
+	Decrease: 'a'
+
+Parameter B
+	Increase: 'w'
+	Decrease: 's'
+
+Parametere R
+	Increase: 'e'
+	Decrease: 'd'
+
+Rotate View:
+	X Axis: Up/Down Arrow Keys
+	Y Axis: Left/Right Arrow Keys
+
+I could not figure out why the printed bitmap characters
+fade in and out. They appear to be following the color set in 
+the draw_lorenz function, however I set the color right before
+calling Print, so I'm unsure how to fix it.
+
+There was no discernable pattern when increasing or decreasing
+the lorenz paramters, although r seems to be radius.
+
+I had hoped to develop an adjustable perspective viewport, 
+however that exceeded the scope of what I could accomplish for this 
+assignment. 
