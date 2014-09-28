@@ -11,9 +11,8 @@
 #include <GL/glut.h>
 #endif
 
-int th=0;         //  Azimuth of view angle
-int ph=0;         //  Elevation of view angle
-int fov=35;       //  Field of view (for perspective)
+int xrot=0;
+int yrot=0;
 double asp=1;     //  Aspect ratio
 double dim=50.0;   //  Size of world
 
@@ -67,10 +66,10 @@ static double dt = 0.001;
 
 static double s  = 10;
 static double b  = 2.6666;
-static double r  = 28;
+static double r  = 20;
 
-static const double _ds = 0.01;
-static const double _db = 0.00001;
+static const double _ds = 0.1;
+static const double _db = 0.001;
 static const double _dr = 0.05;
 
 const static int MAX_POINTS = 100000;
@@ -133,14 +132,15 @@ static void display()
    	glEnable(GL_DEPTH_TEST);
    	//  Undo previous transformations
    	glLoadIdentity();
-
-   	glRotatef(ph,1,0,0);
-      	glRotatef(th,0,1,0);
    	
+	glRotatef(xrot, 1, 0, 0);
+	glRotatef(yrot, 0, 1, 0);
+	glTranslatef(-r/2, -r/2, 0);
 	draw_lorenz_points();
 
+
+	glColor3f(1,1,1);
 	glWindowPos2i(5, 5);
-	glColor3f(1.0f,1.0f,1.0f);
 	Print("Lorenz Params - s: %f, b: %f, r: %f", s, b, r);
 
    	glFlush();
@@ -158,7 +158,7 @@ static void Project()
    //  Undo previous transformations
    glLoadIdentity();
 
-   glOrtho(-asp*dim,+asp*dim, -dim,+dim, -dim,+dim);
+   glOrtho(-dim*asp, dim*asp, -dim, dim, -dim, dim);
 
    //  Switch to manipulating the model matrix
    glMatrixMode(GL_MODELVIEW);
@@ -168,22 +168,24 @@ static void Project()
 
 static void special(int key,int x,int y)
 {
+	
 	//  Right arrow key - increase angle by 5 degrees
    	if (key == GLUT_KEY_RIGHT)
-      		th += 5;
+      		yrot += 5;
    	//  Left arrow key - decrease angle by 5 degrees
    	else if (key == GLUT_KEY_LEFT)
-      		th -= 5;
+      		yrot -= 5;
    	//  Up arrow key - increase elevation by 5 degrees
    	else if (key == GLUT_KEY_UP)
-      		ph += 5;
+      		xrot += 5;
    	//  Down arrow key - decrease elevation by 5 degrees
    	else if (key == GLUT_KEY_DOWN)
-      		ph -= 5;
-
+      		xrot -= 5;
    	//  Keep angles to +/-360 degrees
-   	th %= 360;
-   	ph %= 360;
+
+   	xrot %= 360;
+   	yrot %= 360;
+	
 	//  Reproject
    	Project();
    	//  Tell GLUT it is necessary to redisplay the scene
@@ -225,7 +227,8 @@ static void key(unsigned char ch,int x,int y)
 static void reshape(int width, int height) 
 {
 	//  Reproject
-	asp = (double)height/(double)width;
+	asp = (double)width/(double)height;
+	glViewport(0, 0, width, height);
    	Project();
 }
 
