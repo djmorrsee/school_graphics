@@ -18,3 +18,7 @@ Added a cylindrical primitive to the scene. The pole will act as a lamp once we 
 	
 	- decreases the amount of vertices in the pole
 
+
+The cylinder is created by 2 function calls to a drawCricle method, and then connected via a drawBody method.
+
+The cylinder is created at origin and moved via glTranslate in the drawCylinder function.
