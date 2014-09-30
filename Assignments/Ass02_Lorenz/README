@@ -19,24 +19,10 @@ Rotate View:
 	X Axis: Up/Down Arrow Keys
 	Y Axis: Left/Right Arrow Keys
 
-I could not figure out why the printed bitmap characters
-fade in and out. They appear to be following the color set in
-the draw_lorenz function, however I set the color right before
-calling Print, so I'm unsure how to fix it.
+**RESUBMISSION NOTES**
 
-There was no discernable pattern when increasing or decreasing
-the lorenz paramters, although r seems to be radius.
+Fixed aspect ratio scaling. The visual now scales with the height of the window, but does not stretch. The key was the glViewport() call.
 
-I had hoped to develop an adjustable perspective viewport,
-however that exceeded the scope of what I could accomplish for this
-assignment. I kept with an orthographic view instead.
-
-RESUBMISSION NOTES
-
-Fixed aspect ratio scaling. The visual now scales with the height of the window,
-but does not stretch.
-
-Fixed Text Color Rendering error. Calling glColor() after glWindoPos() caused
-the color call to be lost.
+Fixed Text Color Rendering error. Calling glColor() after glWindoPos() caused the color call to be lost.
 
 Adjusted some parameters to make the rendered effect more visually appealing.
