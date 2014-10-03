@@ -1,4 +1,5 @@
 To build, make all
+To run, ./scene
 
 The scene was created using helper functions built up througout the assignments, found in dj_primitives.h
 
