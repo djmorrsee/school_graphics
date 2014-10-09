@@ -10,6 +10,4 @@ typedef struct
 
 void replaceVert(vert* v, float x, float y, float z);
 
-vert* newVert(float x, float y, float z);
-
 #endif

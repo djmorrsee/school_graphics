@@ -17,6 +17,4 @@ typedef struct
 
 void replaceFace(face* f, vert *a, vert *b, vert *c);
 
-face* newFace (vert *a, vert *b, vert *c);
-
 #endif

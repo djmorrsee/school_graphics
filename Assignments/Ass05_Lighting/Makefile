@@ -5,7 +5,7 @@ SCENENAME=light_scene
 
 CLEAN=rm -f $(SCENENAME) *.o *.a
 
-all:lightscene
+all: clean lightscene
 
 lightscene:lightscene.c face vert dj_primitives
 	gcc $(CFLG) $< face.o vert.o dj_primitives.o -o $(SCENENAME) $(LIBS)

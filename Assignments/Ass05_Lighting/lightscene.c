@@ -1,3 +1,5 @@
+#define GL_GLEXT_PROTOTYPES
+
 #include <math.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -24,7 +26,6 @@ static float getRandPercent()
 {
 	return (float)rand() / (float)RAND_MAX;
 }
-
 
 ///////////////////////////////
 
@@ -58,11 +59,13 @@ static float clippingPlane = 50;
 static float yRot = 0;
 static float xRot = 0;
 
-static float xPos = 0;
-static float yPos = 0;
-static float zPos = 0;
+//static float xPos = 0;
+//static float yPos = 0;
+//static float zPos = 0;
 
 static bool usePerspective;
+static bool useLighting;
+static bool useSmooth;
 
 static void Project()
 {
@@ -76,7 +79,7 @@ static void Project()
 	if(usePerspective == true) {
 		gluPerspective(45, 1, 0.01, 1000);
 	} else {
-		glOrtho(-oDim, oDim, - oDim / 2, oDim, -clippingPlane, clippingPlane);
+		glOrtho(-oDim, oDim, - oDim, oDim, -clippingPlane, clippingPlane);
 	}
 
 
@@ -85,6 +88,14 @@ static void Project()
 }
 
 // OpenGL Draw Callback
+float li_zh, li_y;
+float li_r, li_g, li_b;
+void initLight() {
+	li_zh = 30;
+	li_y = -5;
+	li_r = li_b = li_g = 0.8;
+}
+
 static void display()
 {
 
@@ -99,23 +110,73 @@ static void display()
 	//  Undo previous transformations
 	glLoadIdentity();
 
-	glColor3f(1, 1, 1);
-	vert a;
-	vert b;
-	vert c;
-	replaceVert(&a, 0, 0, 0);
-	replaceVert(&b, 1, 0, 0);
-	replaceVert(&c, 0, 1, 0);
+		// Scene Drawing Matrix
+	glPushMatrix();
 
-	face f;
-	replaceFace(&f, &a, &b, &c);
+	glRotatef(xRot, 1, 0, 0);
+	glRotatef(yRot, 0, 1, 0);
 
-	drawFace(f);
+	// Lighting Section //
+	glShadeModel(useSmooth ? GL_SMOOTH : GL_FLAT);
+	if (useLighting) {
+		float ambient[] = { 0.1, 0.1, 0.1, 1.0 };
+		float diffuse[] = { li_r, li_g, li_b, 1.0 };
+		float specular[] = { 0, 0, 0, 1 };
+		
+		float pos[] = { 5 * Cos(li_zh), li_y, 5 * Sin(li_zh), 1 };
+				
+		glEnable(GL_NORMALIZE);
+		glEnable(GL_LIGHTING);
+		glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, 0);
+		glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 0);
+		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+		glEnable(GL_COLOR_MATERIAL);
+		
+		glEnable(GL_LIGHT0);
+		
+		glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+		glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+		glLightfv(GL_LIGHT0, GL_POSITION, pos);
+	} else 
+		glDisable(GL_LIGHTING);
+	
+	if(usePerspective) {
+		// Move Viewport Backwards and Up		
+		glTranslatef(0, -2, -10);
+	}
 
+	// Scene
+	glPushMatrix();
+	glPopMatrix();
+	
+	glColor3f(0.5, 0.5, 0.5);
+	drawSquare();
+	
+
+
+	// Axes // 
+	glDisable(GL_LIGHTING);
+	glColor3f(0.2, 0.2, 0.2);
+	glBegin(GL_LINES);
+	int len = 10;
+	glVertex3d(-len, 0, 0);
+	glVertex3d(len, 0, 0);
+	glVertex3d(0, -len, 0);
+	glVertex3d(0, len, 0);
+	glVertex3d(0, 0, -len);
+	glVertex3d(0, 0, len);
+	glEnd();
+
+	glPopMatrix();
+	
+	
 	// Logg
 	glColor3f(1, 1, 1);
 	glWindowPos2i(5, 5);
 	Print("xrot %.2f yrot %.2f", xRot, yRot);
+	
+	glPopMatrix(); // Scene Drawing Matrix
 
 	glFlush();
 	glutSwapBuffers();
@@ -146,15 +207,26 @@ static void special(int key,int x,int y)
 		glutPostRedisplay();
 }
 
+int d_zh = 3;
 static void key(unsigned char ch,int x,int y)
 {
 	if(ch == 'k') {
-		if (usePerspective)
-			usePerspective = false;
-		else
-			usePerspective = true;
+		usePerspective = !usePerspective;
+	} else if (ch == 'l') {
+		useLighting = !useLighting;
+	} else if (ch == 'j') {
+		useSmooth = !useSmooth;
+	} else if (ch == 27) {
+		exit(0);
 	}
 
+
+	// Light Position
+	else if (ch == 'v') {
+		li_zh = (int)(li_zh + d_zh) % 360;
+	} else if (ch == 'c') {
+		li_zh = (int)(li_zh - d_zh) % 360;
+	}
 
 	//  Reproject
 		Project();
@@ -173,10 +245,15 @@ static void sceneInit ()
 {
 	// GL Settings //
 	glClearColor(0, 0, 0, 0);
+	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
 	// Start in Orthographic View //
 	usePerspective = false;
+	useLighting = false;
+	useSmooth = false;
+	
+	initLight();
 }
 
 static int window_size = 600;

@@ -20,12 +20,16 @@ void replaceFace(face* f, vert *a, vert *b, vert *c)
 
 	f->nx = uy * vz - uz * vy;
 	f->ny = uz * vx - ux * vz;
-	f->nz = ux * vy - uy * vx;
-}
-
-face* newFace (vert *a, vert *b, vert *c)
-{
-	face f;
-	replaceFace(&f, a, b, c);
-	return &f;
+	f->nz = uy * vx - ux * vy;
+	
+	if(f->nx == 0)
+		f->nx = 0;
+		
+	if(f->ny == 0)
+		f->ny = 0;
+		
+	if(f->nz == 0)
+		f->nz = 0;
+	
+	printf("Normal: %f %f %f\n", f->nx, f->ny, f->nz);
 }
