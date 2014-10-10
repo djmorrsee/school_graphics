@@ -21,4 +21,6 @@ void drawCylinderBody(float r, float h, int v);
 
 void drawCylinder(float r, float h, int v);
 
+void drawIcosphere(int dim);
+
 #endif

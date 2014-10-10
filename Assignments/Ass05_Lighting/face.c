@@ -1,26 +1,17 @@
+#include <stdio.h>
 #include "face.h"
 
-void replaceFace(face* f, vert *a, vert *b, vert *c)
+void replaceFace(face* f, vert a, vert b, vert c)
 {
-	float ux, uy, uz, vx, vy, vz;
-
-	// Normals
-	ux = a->x - b->x;
-	uy = a->y - b->y;
-	uz = a->z - b->z;
-
-	vx = c->x - b->x;
-	vy = c->y - b->y;
-	vz = c->z - b->z;
 
 	// Replace
 	f->a = a;
 	f->b = b;
 	f->c = c;
 
-	f->nx = uy * vz - uz * vy;
-	f->ny = uz * vx - ux * vz;
-	f->nz = uy * vx - ux * vy;
+	f->nx = -(b.y - a.y) * (c.z - a.z) + (c.y - a.y) * (b.z - a.z);
+	f->ny = -(b.z - a.z) * (c.x - a.x) + (b.x - a.x) * (c.z - a.z);
+	f->nz = -(b.x - a.x) * (c.y - a.y) + (c.x - a.x) * (b.y - a.y);
 	
 	if(f->nx == 0)
 		f->nx = 0;
@@ -30,6 +21,10 @@ void replaceFace(face* f, vert *a, vert *b, vert *c)
 		
 	if(f->nz == 0)
 		f->nz = 0;
-	
-	printf("Normal: %f %f %f\n", f->nx, f->ny, f->nz);
+
+}
+
+void printFace(face f) 
+{
+	printf("Face:: A(%.2f, %.2f, %.2f) B(%.2f %.2f %.2f) C(%.2f %.2f %.2f)\n", f.a.x, f.a.y, f.a.z, f.b.x, f.b.y, f.b.z, f.c.x, f.c.y, f.c.z);
 }

@@ -5,9 +5,9 @@
 
 typedef struct
 {
-	vert *a;
-	vert *b;
-	vert *c;
+	vert a;
+	vert b;
+	vert c;
 
 	float nx;
 	float ny;
@@ -15,6 +15,8 @@ typedef struct
 
 } face;
 
-void replaceFace(face* f, vert *a, vert *b, vert *c);
+void replaceFace(face* f, vert a, vert b, vert c);
+
+void printFace(face f);
 
 #endif

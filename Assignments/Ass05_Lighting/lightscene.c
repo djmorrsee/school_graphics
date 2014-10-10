@@ -22,11 +22,6 @@
 #define Cos(th) cos(3.1415927/180*(th))
 #define Sin(th) sin(3.1415927/180*(th))
 
-static float getRandPercent()
-{
-	return (float)rand() / (float)RAND_MAX;
-}
-
 ///////////////////////////////
 
 /*
@@ -53,15 +48,11 @@ void Print(const char* format , ...)
 *  Set projection
 */
 // Ortho
-static float oDim = 6;
+static float oDim = 10;
 static float clippingPlane = 50;
 
 static float yRot = 0;
 static float xRot = 0;
-
-//static float xPos = 0;
-//static float yPos = 0;
-//static float zPos = 0;
 
 static bool usePerspective;
 static bool useLighting;
@@ -79,7 +70,7 @@ static void Project()
 	if(usePerspective == true) {
 		gluPerspective(45, 1, 0.01, 1000);
 	} else {
-		glOrtho(-oDim, oDim, - oDim, oDim, -clippingPlane, clippingPlane);
+		glOrtho(-oDim, oDim, -oDim / 2, oDim + oDim / 2, -clippingPlane, clippingPlane);
 	}
 
 
@@ -90,12 +81,43 @@ static void Project()
 // OpenGL Draw Callback
 float li_zh, li_y;
 float li_r, li_g, li_b;
+float li_d;
 void initLight() {
-	li_zh = 30;
-	li_y = -5;
+	li_zh = 90;
+	li_y = -8;
 	li_r = li_b = li_g = 0.8;
+	li_d = 8;
 }
 
+void drawLight() {
+	glShadeModel(useSmooth ? GL_SMOOTH : GL_FLAT);
+	if (useLighting) {
+		float ambient[] = { 0.1, 0.1, 0.1, 1.0 };
+		float diffuse[] = { li_r, li_g, li_b, 1.0 };
+		float specular[] = { 0, 0, 0, 1 };
+		
+		float pos[] = { li_d * Cos(li_zh), li_y, li_d * Sin(li_zh), 1 };
+		
+		glEnable(GL_LIGHTING);
+		glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, 1);
+		float m[] = {GL_TRUE};
+		glLightModelfv(GL_LIGHT_MODEL_TWO_SIDE, m);
+		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+		glEnable(GL_COLOR_MATERIAL);
+		
+		glEnable(GL_LIGHT0);
+		
+		glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+		glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+		glLightfv(GL_LIGHT0, GL_POSITION, pos);
+		
+		
+	} else 
+		glDisable(GL_LIGHTING);
+}
+
+static int resolution = 0;
 static void display()
 {
 
@@ -117,29 +139,7 @@ static void display()
 	glRotatef(yRot, 0, 1, 0);
 
 	// Lighting Section //
-	glShadeModel(useSmooth ? GL_SMOOTH : GL_FLAT);
-	if (useLighting) {
-		float ambient[] = { 0.1, 0.1, 0.1, 1.0 };
-		float diffuse[] = { li_r, li_g, li_b, 1.0 };
-		float specular[] = { 0, 0, 0, 1 };
-		
-		float pos[] = { 5 * Cos(li_zh), li_y, 5 * Sin(li_zh), 1 };
-				
-		glEnable(GL_NORMALIZE);
-		glEnable(GL_LIGHTING);
-		glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, 0);
-		glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 0);
-		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-		glEnable(GL_COLOR_MATERIAL);
-		
-		glEnable(GL_LIGHT0);
-		
-		glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-		glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
-		glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
-		glLightfv(GL_LIGHT0, GL_POSITION, pos);
-	} else 
-		glDisable(GL_LIGHTING);
+	drawLight();
 	
 	if(usePerspective) {
 		// Move Viewport Backwards and Up		
@@ -147,16 +147,40 @@ static void display()
 	}
 
 	// Scene
+	glColor3f(.6, .6, .6);
 	glPushMatrix();
+	drawBox(15, 0.125, 15);
 	glPopMatrix();
 	
-	glColor3f(0.5, 0.5, 0.5);
-	drawSquare();
+	glPushMatrix();
+	glTranslatef(0, 1, 0);
+	glColor3f(1, 1, 1);
+	drawCylinder(0.5, 2, 4 + resolution * 4);
 	
+	glTranslatef(0, 1.5, 0);
+	glColor3f(1, 1, 0);
+	drawIcosphere(resolution);
+	glPopMatrix();
+	
+	glColor3f(1, 0, 0);
+	glPushMatrix();
+	glTranslatef(3, .5, 1);
+	glRotatef(45, 0, 1, 0);
+	drawBox(4, 1, 1);
+	glPopMatrix();
 
-
-	// Axes // 
+	// Things That Don't Need Light // 
 	glDisable(GL_LIGHTING);
+	
+	// Draw Sphere As Light
+	glPushMatrix();
+	glColor3f(1, 1, .4);
+	glTranslatef(-li_d * Cos(li_zh), -li_y, -li_d * Sin(li_zh));
+	glScalef(.5, .5, .5);
+	drawIcosphere(1);
+	glPopMatrix();
+	
+	// Axes //
 	glColor3f(0.2, 0.2, 0.2);
 	glBegin(GL_LINES);
 	int len = 10;
@@ -174,7 +198,7 @@ static void display()
 	// Logg
 	glColor3f(1, 1, 1);
 	glWindowPos2i(5, 5);
-	Print("xrot %.2f yrot %.2f", xRot, yRot);
+	Print("K: %s Res: %d Dim: %f Smooth?: %s", usePerspective ? "Perspective" : "Ortho", resolution, oDim, useSmooth ? "YES" : "NO");
 	
 	glPopMatrix(); // Scene Drawing Matrix
 
@@ -188,18 +212,19 @@ static void special(int key,int x,int y)
 {
 
 		//  Right arrow key
-		if (key == GLUT_KEY_RIGHT)
+		if (key == GLUT_KEY_RIGHT && yRot < 30)
 		yRot+=rot_amount;
 		//  Left arrow key
-		else if (key == GLUT_KEY_LEFT)
+		else if (key == GLUT_KEY_LEFT && yRot > -30)
 		yRot-=rot_amount;
 		//  Up arrow key
-		else if (key == GLUT_KEY_UP)
+		else if (key == GLUT_KEY_UP && xRot < 30)
 		xRot += rot_amount;
 		//  Down arrow key
-		else if (key == GLUT_KEY_DOWN)
+		else if (key == GLUT_KEY_DOWN && xRot > -30)
 		xRot -= rot_amount;
 
+	
 
 	//  Reproject
 		Project();
@@ -207,7 +232,7 @@ static void special(int key,int x,int y)
 		glutPostRedisplay();
 }
 
-int d_zh = 3;
+static float d_zh = .25;
 static void key(unsigned char ch,int x,int y)
 {
 	if(ch == 'k') {
@@ -220,12 +245,23 @@ static void key(unsigned char ch,int x,int y)
 		exit(0);
 	}
 
-
-	// Light Position
-	else if (ch == 'v') {
-		li_zh = (int)(li_zh + d_zh) % 360;
-	} else if (ch == 'c') {
-		li_zh = (int)(li_zh - d_zh) % 360;
+	else if (ch == 'w' && oDim > 5) {
+		if(!usePerspective) {
+			oDim--;
+		}
+	}
+	
+	else if (ch == 's' && oDim < 50) {
+		if(!usePerspective) {
+			oDim++;		}
+	}
+	
+	else if (ch == 'a' && resolution > 0) {
+		resolution -= 1;
+	} 
+	
+	else if (ch == 'd' && resolution < 3) {
+		resolution += 1;
 	}
 
 	//  Reproject
@@ -239,6 +275,13 @@ static void reshape(int width, int height)
 	//  Reproject
 	glViewport(0, 0, width, height);
 	Project();
+}
+
+static void idle() 
+{
+	li_zh += d_zh;
+	Project();
+	glutPostRedisplay();
 }
 
 static void sceneInit ()
@@ -272,6 +315,7 @@ int main(int argc, char *argv[])
 	glutReshapeFunc(reshape);
 	glutKeyboardFunc(key);
 	glutSpecialFunc(special);
+	glutIdleFunc(idle);
 
 	glutMainLoop();
 

@@ -10,4 +10,6 @@ typedef struct
 
 void replaceVert(vert* v, float x, float y, float z);
 
+float distance(vert a, vert b);
+
 #endif

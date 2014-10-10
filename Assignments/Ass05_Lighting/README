@@ -1,0 +1,28 @@
+Daniel Morrissey Assignment 05 -- Lighting 
+
+To Build: make all
+To Run: ./light_scene
+
+Controls:
+
+Change Perspective Mode: k
+
+Zoom (ortho only): w/s
+
+Rotate/Look: Arrow Keys
+
+Turn Lighting On/Off: l
+
+Turn Smoothing On/Off: j
+
+Increase/Decrease Resolution: a/d
+
+The resolution controls the vert density in the icosphere and cylinder
+
+The light orbits the scene naturally. 
+
+Notes:
+
+Increasing the number of faces on the icosphere causes it to become dimmer overall. Normals appear to work fine, but there are no shiny faces at a certain resolution.
+
+Normals are tough to get right, and I'm still not 100% sure my drawFaces method and face class handle them properly.
