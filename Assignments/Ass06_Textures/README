@@ -1,0 +1,14 @@
+Daniel Morrissey Assignment 06 -- Texturing
+
+To Build: make all
+To Run: ./texscene
+
+Controls:
+
+-Change Perspective Mode: k
+-Turn Lighting On/Off: l
+-Rotate/Look: Arrow Keys
+
+The scene consists of various textured primitives. Each texture is tileable.
+
+Each object is sized and scaled with regard to relative texture sizes (ie. so a brick looks right compared to a door).
