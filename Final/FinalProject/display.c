@@ -39,16 +39,11 @@ void draw_structure()
 	glPopMatrix();
 }
 
-void draw_light()
+void draw_light(light l)
 {
-	float ambient[] = { 0.1, 0.1, 0.1, 1.0 };
-	float diffuse[] = { li_r, li_g, li_b, 1.0 };
-	float specular[] = { 0, 0, 0, 1 };
-
-	float pos[] = { li_d * Cos(li_zh), li_y, li_d * Sin(li_zh), 1 };
-
 	glEnable(GL_LIGHTING);
 	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, 1);
+	
 	float m[] = {GL_TRUE};
 	glLightModelfv(GL_LIGHT_MODEL_TWO_SIDE, m);
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
@@ -56,10 +51,10 @@ void draw_light()
 
 	glEnable(GL_LIGHT0);
 
-	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
-	glLightfv(GL_LIGHT0, GL_POSITION, pos);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, (float*)l.ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, (float*)l.diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, (float*)l.specular);
+	glLightfv(GL_LIGHT0, GL_POSITION, (float*)l.position);
 }
 
 void display() 
@@ -71,7 +66,7 @@ void display()
 	// Enable Z-buffering in OpenGL
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHTING);
 	
 	// Switch to manipulating the model matrix
 	glMatrixMode(GL_MODELVIEW);
@@ -79,15 +74,12 @@ void display()
 	// Undo previous transformations
 	glLoadIdentity();
 
-	//float lv[3] = { vx_persp_loc + vlook_vector[0], vy_persp_loc + vlook_vector[1], vz_persp_loc + vlook_vector[2] };
-	float x = vcamera_location[0] + vlook_vector[0];
-	float y = vcamera_location[1] + vlook_vector[1];
-	float z = vcamera_location[2] + vlook_vector[2];
+	// Viewport
+	float* look_pos = get_look_position();
+	gluLookAt(vcamera_location[0],vcamera_location[1],vcamera_location[2] , look_pos[0],look_pos[1],look_pos[2] , 0,1,0);
 
-	gluLookAt(vcamera_location[0],vcamera_location[1],vcamera_location[2] , x,y,z , 0,1,0);
-
+	// Scene
 	glColor3f(.8,.8,.8);
-
 	draw_structure();
 
 	// Log

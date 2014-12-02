@@ -9,6 +9,20 @@ dj_vert new_vert (double _x, double _y, double _z, double tx, double ty)
 	return vert;
 }
 
+dj_vert norm_dj_vert (dj_vert v)
+{
+	float len = sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+	return new_vert(v.x/len, v.y/len, v.z/len, v.tex_x, v.tex_y);
+}
+
+void norm_vert (float v[3])
+{
+	float len = sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
+	v[0] = v[0] / len;
+	v[1] = v[1] / len;
+	v[2] = v[2] / len;
+}
+
 
 dj_vert cross_product(dj_vert a, dj_vert b)
 {
@@ -33,8 +47,27 @@ dj_face new_face (dj_vert _a, dj_vert _b, dj_vert _c)
 }
 
 
-light new_light (float r, float g, float b, float x, float y, float z)
+light new_light (float *rgb, float *spec, float *amb, float *pos)
 {
-	light l = { .diffuse[0] = r, .diffuse[1] = g, .diffuse[2] = b, .position[0] = x, .position[1] = y, .position[2] = z};
+	light l = 	{ 
+				.diffuse[0] = rgb[0], 
+				.diffuse[1] = rgb[1], 
+				.diffuse[2] = rgb[2],
+				.diffuse[3] = rgb[3],
+				
+				.specular[0] = spec[0], 
+				.specular[1] = spec[1], 
+				.specular[2] = spec[2],
+				.specular[3] = spec[3],
+				 
+				.ambient[0] = amb[0], 
+				.ambient[1] = amb[1], 
+				.ambient[2] = amb[2],
+				.ambient[3] = amb[3],
+				
+				.position[0] = pos[0], 
+				.position[1] = pos[1], 
+				.position[2] = pos[2]
+				};
 	return l;
 }

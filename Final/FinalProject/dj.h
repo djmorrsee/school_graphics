@@ -20,7 +20,6 @@
 
 typedef enum { left=0, right, forward, backward, up, down } facing_t;
 
-
 // Program Constants and Variables
 #include "glob_const.h"
 #include "glob_var.h"
@@ -28,8 +27,7 @@ typedef enum { left=0, right, forward, backward, up, down } facing_t;
 // DJ Functions
 #include "dj_structures.h"
 #include "dj_primitives.h"
-
-
+#include "motion.h"
 
 
 // GLUT Bound Functions // 
@@ -39,10 +37,6 @@ void special(int key, int x, int y);
 void key(unsigned char ch, int x, int y);
 void idle();
 void mouse_move(int x, int y);
-
-// DJ Structures //
-
-
 
 // Helper Functions From CSCIx229 //
 void Print(const char* format, ...);

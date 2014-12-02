@@ -10,9 +10,9 @@ int last_x = 0;
 int last_y = 0;
 void mouse_move(int x, int y)
 {
-	printf("Mouse %d %d", x, y);
-	Rotate(-(last_x - x), 0);
+	Rotate(-(last_x - x), -(last_y - y));
 	last_x = x;
+	last_y = y;
 	glutPostRedisplay();
 
 }

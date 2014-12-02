@@ -17,12 +17,11 @@ extern float vy_persp_rot;
 extern float vlook_vector[3];
 
 // Rotate the screen (alters persp_rot and vlook_vector)
-void Rotate(float x, float y);
 
 // User View Location
 extern float vcamera_location[3];
 
+float* get_look_position();
 // Moves the Camera relative to look direction
-void Move(facing_t dir);
 
 #endif

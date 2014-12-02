@@ -18,6 +18,8 @@ typedef struct {
 } dj_vert;
 
 dj_vert new_vert (double _x, double _y, double _z, double tx, double ty);
+dj_vert norm_dj_vert (dj_vert v);
+void norm_vert (float v[3]);
 
 typedef struct {
 	dj_vert a;
@@ -42,9 +44,11 @@ typedef struct {
 // Lighting
 typedef struct {
 	double diffuse[4];
+	double specular[4];
+	double ambient[4];
 	double position[3];
 } light;
 
-light new_light (float r, float g, float b, float x, float y, float z);
+light new_light (float *rgb, float *spec, float *amb, float *pos);
 
 #endif /* DJ_STRUCTURES_H_ */
