@@ -59,7 +59,7 @@ void drawTexturedSquare(unsigned int texID, float xa, float ya)
 void drawTexturedCircle(unsigned int texID, int res) 
 {
 	int i;
-	int v0, v1, v2;
+	int v0, v1, v2;	
 
 	vert verts[res + 1];
 	face faces[res];

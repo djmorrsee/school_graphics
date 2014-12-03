@@ -5,42 +5,42 @@
 
 dj_vert new_vert (double _x, double _y, double _z, double tx, double ty)
 {
-	dj_vert vert = { .x = _x, .y = _y, .z = _z, .tex_x = tx, .tex_y = ty };
+	dj_vert vert = { .position.x = _x, .position.y = _y, .position.z = _z, .tex_coords.x = tx, .tex_coords.y = ty };
 	return vert;
 }
 
 dj_vert norm_dj_vert (dj_vert v)
 {
+	float len = sqrt(v.position.x*v.position.x + v.position.y*v.position.y + v.position.z*v.position.z);
+	return new_vert(v.position.x/len, v.position.y/len, v.position.z/len, v.tex_coords.x, v.tex_coords.y);
+}
+
+vector3 norm_vert (vector3 v)
+{
 	float len = sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
-	return new_vert(v.x/len, v.y/len, v.z/len, v.tex_x, v.tex_y);
+	vector3 nv = { .x = v.x / len, .y = v.y / len, .z = v.z / len };
+	return nv;
 }
 
-void norm_vert (float v[3])
+vector3 cross_product(vector3 a, vector3 b)
 {
-	float len = sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
-	v[0] = v[0] / len;
-	v[1] = v[1] / len;
-	v[2] = v[2] / len;
-}
+	vector3 cross;
 
+	cross.x = (a.y * b.z) - (a.z * b.y);
+	cross.y = (a.z * b.x) - (a.x * b.z);
+	cross.z = (a.x * b.y) - (a.y * b.x);
 
-dj_vert cross_product(dj_vert a, dj_vert b)
-{
-	double nx = (a.y * b.z) - (a.z * b.y);
-	double ny = (a.z * b.x) - (a.x * b.z);
-	double nz = (a.x * b.y) - (a.y * b.x);
+	cross.x = cross.x ? cross.x : 0;
+	cross.y = cross.y ? cross.y : 0;
+	cross.z = cross.z ? cross.z : 0;
 
-	// Get rid of -0s
-	nx = nx ? nx : 0;
-	ny = ny ? ny : 0;
-	nz = nz ? nz : 0;
+	return cross;
 
-	return new_vert(nx, ny, nz, 0, 0);
 }
 
 dj_face new_face (dj_vert _a, dj_vert _b, dj_vert _c)
 {
-	dj_vert normals = cross_product(_a, _b);
+	vector3 normals = cross_product(_a.position, _b.position);
 
 	dj_face face = { .a = _a, .b = _b, .c = _c, .norm_x = normals.x, .norm_y = normals.y, .norm_z = normals.z};
 	return face;
@@ -50,24 +50,24 @@ dj_face new_face (dj_vert _a, dj_vert _b, dj_vert _c)
 light new_light (float *rgb, float *spec, float *amb, float *pos)
 {
 	light l = 	{ 
-				.diffuse[0] = rgb[0], 
-				.diffuse[1] = rgb[1], 
-				.diffuse[2] = rgb[2],
-				.diffuse[3] = rgb[3],
+				.diffuse.x = rgb[0],
+				.diffuse.y = rgb[1],
+				.diffuse.z = rgb[2],
+				.diffuse.a = rgb[3],
 				
-				.specular[0] = spec[0], 
-				.specular[1] = spec[1], 
-				.specular[2] = spec[2],
-				.specular[3] = spec[3],
+				.specular.x = spec[0],
+				.specular.y = spec[1],
+				.specular.z = spec[2],
+				.specular.a = spec[3],
 				 
-				.ambient[0] = amb[0], 
-				.ambient[1] = amb[1], 
-				.ambient[2] = amb[2],
-				.ambient[3] = amb[3],
+				.ambient.x = amb[0],
+				.ambient.y = amb[1],
+				.ambient.z = amb[2],
+				.ambient.a = amb[3],
 				
-				.position[0] = pos[0], 
-				.position[1] = pos[1], 
-				.position[2] = pos[2]
+				.position.x = pos[0],
+				.position.y = pos[1],
+				.position.z = pos[2]
 				};
 	return l;
 }

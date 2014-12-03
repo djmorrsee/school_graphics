@@ -51,10 +51,12 @@ void draw_light(light l)
 
 	glEnable(GL_LIGHT0);
 
-	glLightfv(GL_LIGHT0, GL_AMBIENT, (float*)l.ambient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, (float*)l.diffuse);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, (float*)l.specular);
-	glLightfv(GL_LIGHT0, GL_POSITION, (float*)l.position);
+	float* amb = { l.ambient.x, l.ambient.y, l.ambient.z };
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, l.ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, l.diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, l.specular);
+	glLightfv(GL_LIGHT0, GL_POSITION, l.position);
 }
 
 void display() 

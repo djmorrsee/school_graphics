@@ -11,15 +11,31 @@
 typedef struct {
 	double x;
 	double y;
-	double z;
+} vector2;
 
-	double tex_x;
-	double tex_y;
+typedef struct {
+	double x;
+	double y;
+	double z;
+} vector3;
+
+typedef struct {
+
+	double x;
+	double y;
+	double z;
+	double a;
+
+} vector4;
+
+typedef struct {
+	vector3 position;
+	vector2 tex_coords;
 } dj_vert;
 
 dj_vert new_vert (double _x, double _y, double _z, double tx, double ty);
 dj_vert norm_dj_vert (dj_vert v);
-void norm_vert (float v[3]);
+vector3 norm_vert (vector3 v);
 
 typedef struct {
 	dj_vert a;
@@ -43,10 +59,10 @@ typedef struct {
 
 // Lighting
 typedef struct {
-	double diffuse[4];
-	double specular[4];
-	double ambient[4];
-	double position[3];
+	vector4 diffuse;
+	vector4 specular;
+	vector4 ambient;
+	vector3 position;
 } light;
 
 light new_light (float *rgb, float *spec, float *amb, float *pos);

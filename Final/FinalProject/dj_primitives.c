@@ -11,8 +11,8 @@ void drawPoint(dj_vert v)
 {
 	// This function assumes we are inside a glBegin(GL_TRIANGLES) block
 	// Probably shouldnt be called anywhere else but drawFace
-	glTexCoord2f(v.tex_x, v.tex_y);
-	glVertex3f(v.x, v.y, v.z);
+	glTexCoord2f(v.tex_coords.x, v.tex_coords.y);
+	glVertex3f(v.position.x, v.position.y, v.position.z);
 }
 void drawFace(dj_face f)
 {
