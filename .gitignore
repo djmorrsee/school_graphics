@@ -1,4 +1,6 @@
+Examples/
 .DS_STORE
+*.cproject
 *~
 *.o
 *.a

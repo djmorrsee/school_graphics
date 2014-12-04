@@ -28,6 +28,7 @@ typedef enum { left=0, right, forward, backward, up, down } facing_t;
 #include "dj_structures.h"
 #include "dj_primitives.h"
 #include "motion.h"
+#include "lighting.h"
 
 
 // GLUT Bound Functions // 
@@ -35,8 +36,10 @@ void display();
 void reshape(int x, int y);
 void special(int key, int x, int y);
 void key(unsigned char ch, int x, int y);
+void key_up(unsigned char ch, int x, int y);
 void idle();
 void mouse_move(int x, int y);
+void mouse_click(int button, int state, int x, int y);
 
 // Helper Functions From CSCIx229 //
 void Print(const char* format, ...);

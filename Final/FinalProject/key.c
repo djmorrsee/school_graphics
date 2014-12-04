@@ -2,6 +2,7 @@
  * 
  */
 #include "dj.h"
+
 void key(unsigned char ch, int x, int y) 
 {
 	//  Exit on ESC
@@ -9,15 +10,32 @@ void key(unsigned char ch, int x, int y)
 		exit(0);
 
 	if(ch == 'w')
-		Move(forward);
+		v_move_forward = true;
+	if (ch == 's')
+		v_move_backward = true;
+	if (ch == 'a')
+		v_move_left = true;
+	if (ch == 'd')
+		v_move_right = true;
+
+	if(ch == 'p')
+		v_rotate_view = !v_rotate_view;
+
+
+
+	glutPostRedisplay();
+}
+
+void key_up(unsigned char ch, int x, int y)
+{
+	if(ch == 'w')
+		v_move_forward = false;
 	else if (ch == 's')
-		Move(backward);
+		v_move_backward = false;
 	else if (ch == 'a')
-		Move(left);
+		v_move_left = false;
 	else if (ch == 'd')
-		Move(right);
-
-
+		v_move_right = false;
 
 	glutPostRedisplay();
 }

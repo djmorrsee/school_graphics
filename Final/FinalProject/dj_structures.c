@@ -3,23 +3,31 @@
  */
 #include "dj.h"
 
-dj_vert new_vert (double _x, double _y, double _z, double tx, double ty)
+vector2 norm_vector2 (vector2 v)
 {
-	dj_vert vert = { .position.x = _x, .position.y = _y, .position.z = _z, .tex_coords.x = tx, .tex_coords.y = ty };
-	return vert;
+	float len = sqrt(v.x * v.x + v.y * v.y);
+	vector2 nv = { .x = v.x / len, .y = v.y / len };
+	return nv;
 }
 
-dj_vert norm_dj_vert (dj_vert v)
-{
-	float len = sqrt(v.position.x*v.position.x + v.position.y*v.position.y + v.position.z*v.position.z);
-	return new_vert(v.position.x/len, v.position.y/len, v.position.z/len, v.tex_coords.x, v.tex_coords.y);
-}
-
-vector3 norm_vert (vector3 v)
+vector3 norm_vector3 (vector3 v)
 {
 	float len = sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
 	vector3 nv = { .x = v.x / len, .y = v.y / len, .z = v.z / len };
 	return nv;
+}
+
+vector4 norm_vector4 (vector4 v)
+{
+	float len = sqrt(v.x*v.x + v.y*v.y + v.z*v.z + v.a*v.a);
+	vector4 nv = { .x = v.x / len, .y = v.y / len, .z = v.z / len, .a=v.a/len };
+	return nv;
+}
+
+vert new_vert (double _x, double _y, double _z, double tx, double ty)
+{
+	vert vert = { .position.x = _x, .position.y = _y, .position.z = _z, .tex_coord.x = tx, .tex_coord.y = ty };
+	return vert;
 }
 
 vector3 cross_product(vector3 a, vector3 b)
@@ -38,36 +46,36 @@ vector3 cross_product(vector3 a, vector3 b)
 
 }
 
-dj_face new_face (dj_vert _a, dj_vert _b, dj_vert _c)
+face new_face (vert _a, vert _b, vert _c)
 {
-	vector3 normals = cross_product(_a.position, _b.position);
+	vector3 normals = norm_vector3(cross_product(_a.position, _b.position));
 
-	dj_face face = { .a = _a, .b = _b, .c = _c, .norm_x = normals.x, .norm_y = normals.y, .norm_z = normals.z};
+	face face = { .a = _a, .b = _b, .c = _c, .normal.x = normals.x, .normal.y = normals.y, .normal.z = normals.z};
 	return face;
 }
 
 
-light new_light (float *rgb, float *spec, float *amb, float *pos)
+light new_light (vector3 pos)
 {
 	light l = 	{ 
-				.diffuse.x = rgb[0],
-				.diffuse.y = rgb[1],
-				.diffuse.z = rgb[2],
-				.diffuse.a = rgb[3],
+				.diffuse.x = 1,
+				.diffuse.y = 0,
+				.diffuse.z = 1,
+				.diffuse.a = 1,
 				
-				.specular.x = spec[0],
-				.specular.y = spec[1],
-				.specular.z = spec[2],
-				.specular.a = spec[3],
+				.specular.x = 1,
+				.specular.y = 1,
+				.specular.z = 1,
+				.specular.a = 1,
 				 
-				.ambient.x = amb[0],
-				.ambient.y = amb[1],
-				.ambient.z = amb[2],
-				.ambient.a = amb[3],
+				.ambient.x = .1,
+				.ambient.y = .1,
+				.ambient.z = .1,
+				.ambient.a = 1,
 				
-				.position.x = pos[0],
-				.position.y = pos[1],
-				.position.z = pos[2]
+				.position.x = pos.x,
+				.position.y = pos.y,
+				.position.z = pos.z
 				};
 	return l;
 }

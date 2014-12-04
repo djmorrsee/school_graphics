@@ -7,23 +7,56 @@
 
 #include "dj.h"
 
-float vfield_of_view = 45;
-float vaspect_ratio = 1;
-float vclipping_plane = 10000;
+// Motion
+
+bool v_move_forward = false;
+bool v_move_backward = false;
+bool v_move_left = false;
+bool v_move_right = false;
+
+/////////
+
+
+// Viewport
+bool v_rotate_view = false;
+
+int v_window_width = 0;
+int v_window_height = 0;
+
+float v_field_of_view = 45;
+float v_aspect_ratio = 1;
+float v_clipping_plane = 10000;
+////////////
 
 // User View Rotation
-float vx_persp_rot = 0;
-float vy_persp_rot = 0;
+float v_x_persp_rot = -90;
+float v_y_persp_rot = 0;
 
-float vlook_vector[3] = {0, 0, -1};
+vector3 v_look_vector = { .x=0, .y=0, .z=-1};
 
 // User View Location
 // This is the "origin" for gluLookAt
-float vcamera_location[3] = {0, 0, 5};
+vector3 v_camera_location = {.x=0, .y=0, .z=5};
 
-float* get_look_position()
+vector3 get_look_position()
 {
-	float f[3] = { vcamera_location[0] + vlook_vector[0], vcamera_location[1] + vlook_vector[1], vcamera_location[2] + vlook_vector[2] };
+	vector3 f = { .x=v_camera_location.x + v_look_vector.x, .y=v_camera_location.y + v_look_vector.y, .z=v_camera_location.z + v_look_vector.z };
 	return f;
 }
+///////////////////////////
 
+
+// Lights
+light lights[8] =
+{
+		// Default White Lights at 0, 0, 0
+		{.diffuse = { 1, 1, 1, 1}, .specular = { 1, 1, 1, 1}, .ambient = {0,0,0,1}, .position = { 0, 0, 0}},
+		{.diffuse = { 1, 1, 1, 1}, .specular = { 1, 1, 1, 1}, .ambient = {0,0,0,1}, .position = { 0, 0, 0}},
+		{.diffuse = { 1, 1, 1, 1}, .specular = { 1, 1, 1, 1}, .ambient = {0,0,0,1}, .position = { 0, 0, 0}},
+		{.diffuse = { 1, 1, 1, 1}, .specular = { 1, 1, 1, 1}, .ambient = {0,0,0,1}, .position = { 0, 0, 0}},
+		{.diffuse = { 1, 1, 1, 1}, .specular = { 1, 1, 1, 1}, .ambient = {0,0,0,1}, .position = { 0, 0, 0}},
+		{.diffuse = { 1, 1, 1, 1}, .specular = { 1, 1, 1, 1}, .ambient = {0,0,0,1}, .position = { 0, 0, 0}},
+		{.diffuse = { 1, 1, 1, 1}, .specular = { 1, 1, 1, 1}, .ambient = {0,0,0,1}, .position = { 0, 0, 0}},
+		{.diffuse = { 1, 1, 1, 1}, .specular = { 1, 1, 1, 1}, .ambient = {0,0,0,1}, .position = { 0, 0, 0}}
+};
+//////////

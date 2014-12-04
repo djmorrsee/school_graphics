@@ -9,8 +9,8 @@
 #define DJ_PRIMITIVES_H_
 
 
-void drawFace(dj_face f);
-void drawFaces(dj_face *f, int count, int texture_id);
+void drawFace(face f);
+void drawFaces(face *f, int count, int texture_id);
 void drawMesh(mesh m);
 
 void drawSquare(double xa, double ya, int texture_id);

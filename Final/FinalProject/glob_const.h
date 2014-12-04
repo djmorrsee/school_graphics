@@ -4,9 +4,11 @@
 #ifndef __dj_const
 #define __dj_const
 
-extern const int window_size;
+extern const int c_window_size;
 
-extern const double rot_speed;
-extern const double move_speed;
+extern const double c_rot_x_speed;
+extern const double c_rot_y_speed;
+
+extern const double c_move_speed;
 
 #endif
