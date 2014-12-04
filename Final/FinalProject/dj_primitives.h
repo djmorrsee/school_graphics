@@ -16,4 +16,7 @@ void drawMesh(mesh m);
 void drawSquare(double xa, double ya, int texture_id);
 void drawWall(facing_t dir, double length, double height, int texture_id);
 
+// Final Project Specific
+void draw_structure();
+
 #endif /* DJ_PRIMITIVES_H_ */

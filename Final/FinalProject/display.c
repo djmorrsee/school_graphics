@@ -5,13 +5,12 @@
 
 void display() 
 {
-
 	// Erase the window and the depth buffer
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	
 	// Enable Z-buffering in OpenGL
 	glEnable(GL_DEPTH_TEST);
-//	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_TEXTURE_2D);
 	
 	Project();
 
@@ -44,11 +43,11 @@ void display()
 
 	// Scene
 	glColor3f(.8,.8,.8);
-	//draw_structure();
+	draw_structure();
 	glTranslatef(0, -1, 0);
 
 	glFrontFace(GL_CW);
-	glutSolidTeapot(1);
+	glutSolidTeapot(0.5);
 	glFrontFace(GL_CCW);
 
 	// Log

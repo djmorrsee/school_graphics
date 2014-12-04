@@ -28,7 +28,7 @@ void draw_light (int num)
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-
+	glShadeModel(GL_FLAT);
 
 	float pos[3] = 	{ this_light.position.x, this_light.position.y, this_light.position.z };
 	float dif[4] = 	{ this_light.diffuse.x, this_light.diffuse.y, this_light.diffuse.z, this_light.diffuse.a };
