@@ -38,4 +38,11 @@ vector3 get_look_position();
 // Lighting
 extern light lights[8];
 
+// Shader Modes
+/* 0 - None
+ * 1 - Toon
+ * 2 - Per Pixel
+ */
+extern int vshader_mode;
+
 #endif

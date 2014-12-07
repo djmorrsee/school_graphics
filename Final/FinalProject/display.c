@@ -12,6 +12,9 @@ void display()
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
 	
+	// Set Shader Mode
+	use_shader(vshader_mode);
+
 	Project();
 
 	// Switch to manipulating the model matrix
@@ -35,25 +38,27 @@ void display()
 	gluLookAt(v_camera_location.x,v_camera_location.y,v_camera_location.z , look_pos.x,look_pos.y,look_pos.z , 0,1,0);
 
 	// Lighting
-	vector3 z = {.x=3, .y=0, .z=0};
-	vector4 r = {.x = 1, .y=0,.z=0,.a=1};
+	vector3 z = {.x=0, .y=0, .z=-5};
+	vector4 r = {.x = .5, .y=.5,.z=.5,.a=1};
 
 	set_light(0, z, r);
+
+	z.x = 1.5; z.y = -1; z.z = 1;
+	r.x = .7; r.y = .3; r.z = .3;
+
+	set_light(1, z, r);
 	draw_light(0);
+	draw_light(1);
 
 	// Scene
 	glColor3f(.8,.8,.8);
 	draw_structure();
 	glTranslatef(0, -1, 0);
 
-	glFrontFace(GL_CW);
-	glutSolidTeapot(0.5);
-	glFrontFace(GL_CCW);
-
 	// Log
 	glColor3f(1, 1, 1);
 	glWindowPos2i(5, 5);
-	Print("Rotation: %.3f %.3f %.3f", v_look_vector.x, v_look_vector.y, v_look_vector.z);
+	Print("Shader Mode %d", vshader_mode);
 
 
 	glFlush();

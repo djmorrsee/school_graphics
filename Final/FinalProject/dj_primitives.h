@@ -13,6 +13,8 @@ void drawFace(face f);
 void drawFaces(face *f, int count, int texture_id);
 void drawMesh(mesh m);
 
+
+void drawPlane(int res, int texture_id);
 void drawSquare(double xa, double ya, int texture_id);
 void drawWall(facing_t dir, double length, double height, int texture_id);
 

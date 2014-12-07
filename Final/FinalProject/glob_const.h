@@ -11,4 +11,6 @@ extern const double c_rot_y_speed;
 
 extern const double c_move_speed;
 
+extern const int c_num_shaders;
+
 #endif

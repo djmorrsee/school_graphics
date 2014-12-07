@@ -29,6 +29,7 @@ typedef enum { left=0, right, forward, backward, up, down } facing_t;
 #include "dj_primitives.h"
 #include "motion.h"
 #include "lighting.h"
+#include "shaders.h"
 
 
 // GLUT Bound Functions // 

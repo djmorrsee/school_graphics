@@ -60,3 +60,7 @@ light lights[8] =
 		{.diffuse = { 1, 1, 1, 1}, .specular = { 1, 1, 1, 1}, .ambient = {0,0,0,1}, .position = { 0, 0, 0}}
 };
 //////////
+
+// Shaders
+
+int vshader_mode = 0;

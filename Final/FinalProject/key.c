@@ -19,7 +19,7 @@ void key(unsigned char ch, int x, int y)
 		v_move_right = true;
 
 	if(ch == 'p')
-		v_rotate_view = !v_rotate_view;
+		vshader_mode = (vshader_mode + 1) % c_num_shaders;
 
 
 

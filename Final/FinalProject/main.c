@@ -21,6 +21,11 @@ void SetupScene ()
 	glClearColor(0, 0, 0, 0);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+
+	// Load Textures
+
+
+	load_shaders();
 }
 
 // Bootstrap function to start the GLUT window and bindings

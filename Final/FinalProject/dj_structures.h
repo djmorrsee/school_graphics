@@ -13,6 +13,7 @@ typedef struct {
 	double y;
 } vector2;
 vector2 norm_vector2 (vector2 v);
+void PrintVector2(vector2 v);
 
 typedef struct {
 	double x;
@@ -20,6 +21,8 @@ typedef struct {
 	double z;
 } vector3;
 vector3 norm_vector3 (vector3 v);
+void PrintVector3(vector3 v);
+vector3 cross_product(vector3 a, vector3 b);
 
 typedef struct {
 	double x;
@@ -28,11 +31,13 @@ typedef struct {
 	double a;
 } vector4;
 vector4 norm_vector4 (vector4 v);
+void PrintVector4(vector4 v);
 
 typedef struct {
 	vector3 position;
 	vector2 tex_coord;
 } vert;
+void PrintVert(vert v);
 
 vert new_vert (double _x, double _y, double _z, double tx, double ty);
 
