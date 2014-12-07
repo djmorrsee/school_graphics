@@ -31,7 +31,7 @@ void main()
 		
 		halfV = normalize(hv0);
 		NdotHV = max(dot(n, halfV), 0.0);
-		totalLight += att * vec4(1, 1, 1, 1);
+		totalLight += att * vec4(1, 1, 1, 1); // This should be amb0 // 
 	}
 	
 	// Light 1
