@@ -83,7 +83,7 @@ light new_light (vector3 pos)
 {
 	light l = 	{ 
 				.diffuse.x = 1,
-				.diffuse.y = 0,
+				.diffuse.y = 1,
 				.diffuse.z = 1,
 				.diffuse.a = 1,
 				

@@ -12,15 +12,6 @@ GLuint vertex_shaders[8];
 GLuint fragment_shaders[8];
 GLuint shader_programs[8];
 
-void Fatal(const char* format , ...)
-{
-   va_list args;
-   va_start(args,format);
-   vfprintf(stderr,format,args);
-   va_end(args);
-   exit(1);
-}
-
 int file_exist (char *filename)
 {
 	struct stat buffer;
@@ -131,8 +122,6 @@ void load_shaders ()
 
 		if (file_exist(vn)) {
 
-			printf("loaded %s\n", vn);
-
 			vs = readShaderFile(vn);
 			const char * vv = vs;
 
@@ -147,7 +136,6 @@ void load_shaders ()
 		}
 
 		if(file_exist(fn)) {
-			printf("loaded %s\n", fn);
 
 			fs = readShaderFile(fn);
 			const char * fv = fs;
@@ -175,4 +163,24 @@ void use_shader(int id)
 		glUseProgram(0);
 	}
 
+}
+
+
+char* ShaderName()
+{
+	switch (v_shader_mode)
+	{
+	case 0:
+		return "Fixed";
+		break;
+	case 1:
+		return "\"Toon\"";
+		break;
+	case 2:
+		return "Per Pixel";
+		break;
+	default:
+		return "NaS";
+
+	}
 }

@@ -1,7 +1,13 @@
 /*
- *  Load texture from BMP file
+ * textures.c
+ *
+ *  Created on: Dec 7, 2014
+ *      Author: djmorrsee
  */
+
 #include "dj.h"
+#include "textures.h"
+
 
 /*
  *  Reverse n bytes
@@ -82,7 +88,7 @@ unsigned int LoadTexBMP(const char* file)
    }
 
    //  Sanity check
-   ErrCheck("LoadTexBMP");
+//   ErrCheck("LoadTexBMP");
    //  Generate 2D texture
    glGenTextures(1,&texture);
    glBindTexture(GL_TEXTURE_2D,texture);
@@ -97,4 +103,15 @@ unsigned int LoadTexBMP(const char* file)
    free(image);
    //  Return texture name
    return texture;
+}
+
+
+
+void setup_textures ()
+{
+	v_textures[0] = LoadTexBMP("textures/floor_tiles.bmp");
+	v_textures[1] = LoadTexBMP("textures/wall.bmp");
+	v_textures[2] = LoadTexBMP("textures/ceiling.bmp");
+	v_textures[3] = LoadTexBMP("textures/door.bmp");
+	printf("Texture Loaded: %u", v_textures[0]);
 }

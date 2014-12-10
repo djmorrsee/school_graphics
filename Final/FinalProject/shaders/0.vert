@@ -1,13 +1,17 @@
 // simple toon vertex shader
 // www.lighthouse3d.com
 
-
-varying vec3 normal, lightDir;
+varying vec4 ecPos;
+varying vec4 ambientGlobal;
 
 void main()
 {	
-	lightDir = normalize(vec3(gl_LightSource[0].position));
-	normal = normalize(gl_NormalMatrix * gl_Normal);
-		
+	int i;
+	
+	ecPos = gl_ModelViewMatrix * gl_Vertex;
+	
+	ambientGlobal = gl_LightModel.ambient + gl_FrontMaterial.ambient;
+	gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;	
+	
 	gl_Position = ftransform();
 }

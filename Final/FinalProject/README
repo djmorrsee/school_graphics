@@ -1,0 +1,112 @@
+# *Daniel Morrissey's Graphics Final*
+**damo4408 - Fall 2014**
+**github repository for project:** 
+https://github.com/djmorrsee/school_graphics
+
+##Abstract
+The goal of my project was to create an environment akin to those found in horror-style video game genres. My interests lay in the video game industry, and I was hoping to garner some knowledge about the processes and pipelines that go into video game creation.
+
+My usual work is at a higher level, using one of many game engines to handle the job of rendering my game. I had some prior experience building meshes by hand, but usually I resort to 3D modelling software for asset creation.
+
+I really wanted to focus on lighting and shaders for the project. I wanted to create an atmosphere to the environment using shadows and light. 
+
+## The Scene
+
+#### Geometry
+
+Geometrically, there isn't much too my scene. It's a series of long hallways, built out of GL_QUAD_STRIPS. My focus was not on geometry, however I worked quite a bit to be able to generically draw triangles with proper normals and texture_coordinates. If I had the patience to build more complicated meshes, they would render nicely. 
+
+#### Lighting
+My scene has 5 lights, all towards the ceilings along the hallways. There is one red light, and the rest are white.
+
+#### Textures
+I make use of 4 textures; ceiling, floor, walls and the door. With the exception of the door, I created all the textures in photoshop, basing them off of free textures found online. Each one is tileable, and can be scaled along each plane of geometry to make it look proper.
+
+#### Shading
+The scene has 3 shading programs from which you can choose from. 
+
+- 0 : Fixed
+	- Default OpenGL Fixed Rendering Pipeline
+
+- 1 : Custom Fog
+	- My own "fog" shader. Closer objects are brighter, further objects are black
+	- Supports textures and 8 lights
+
+>- **Fog Shader**
+The fog shader is a simple implementation of a vert and fragment shader. The vert shader computes eye location, ambient color and texture coordinates. The fragment shader computes distance from eye position, and linearly decreases light intensity based upon it. Also takes global ambient color and textures into account.
+
+- 2 : Custom Per-Pixel Shader
+	- My own point light, per-pixel shader. 
+	- Supports textures and 8 lights
+
+
+
+>- **Per Pixel Shader**
+The Per Pixel shader is heavily based upon the point light shader found at lighthouse3d (Blinn-Phong-esque).  The vert shader simply passes through light data, as well as calculates normals and the eye position. The Fragment shader loops through the lights, calculating attenuation and applying their diffuse and ambient components to the totalLight. Textures are accounted for as well.
+
+####Controls:
+
+- WSAD moves your "camera" throughout the scene.
+- To look around, click and drag anywhere in the viewport. 
+
+- P - Change Shader Mode
+- K/L - Decrease/Increase global ambient light. 
+
+####Tips/Thoughts (Read here if something seems off):
+
+- Click and drag to look around. I wanted to implement this as passive mouse movement, however GLUT does not appear to be able to lock the mouse (I had no luck with warpCursor).
+- The GL_CLEAR_COLOR of the world is set to pink, and I make no effort to constrain your movements within the scene, meaning you can easily leave the hallways I have created and look at them from more extreme angles. 
+- If the world is too dark for you to see anything, adjust the global ambient lighting with K or L. This works in all shader modes.
+- The per pixel shader starts to bog down my VM, however I haven't allocated many resources to it. The scene may run slow when using the per pixel shader.
+- Funny things can happen if the window loses focus while moving, as movement is done statefully with glRepeatKey off. Just press all movement buttons if you've found your motion is stuck.
+
+## Conclusion
+
+I have gained a huge appreciation of the amount of work that has gone into modern computer graphics. The amount of math that goes behind simple 3D scenes is mind boggling, and I'm very appreciative of CPU/GPU's doing the multiplication for me. 
+
+I'm very proud of per pixel shader, and was amazed the first time I got a clean render. The shader and some textures makes a scene actually look really decent (keep in mind I'm used to 3D modelling and raytrace rendering). My goal of creating an ambient, "spooky" scene worked out for the most part. The two shaders I created lend themselves to looking somewhat sinister with the correct lighting.
+
+If I had more time, I would have loved to implement shadows. I had to choose based on time and quality between focusing hard on the shaders or shadows. OpenGL does not seem like the best tool for rendering shadow volumes, whereas the shader possibilities are quite high, so that was my reasoning of choosing to focus on shaders.
+
+Another piece that I would have liked to try to implement, which would have tied into video game world creation, is to create a boundary of movement, to keep the viewport from travellling into the pink void. 
+
+### File Appendix (alphabetical order)
+
+- display.c
+	- Contains the GLUT Display callback method, which is linked in main
+- dj_primitives.c/h
+	- Simple mesh drawing routines. Creates a layer of abstraction for drawing uv'd and normal'd planes in 3d space.
+- dj_structures.c/h
+	- Containers for common data types, include Vector2,3 and 4
+- dj.h
+	- Global header for the project, if in doubt, include this.
+- fatal.c
+	- CSCIx229 Error Throwing method
+- glob_const.c/h
+	- Defines constants used in the program. All constant names are of the form "c_var_name"
+-glob_var.c/h
+	- Defines variables a few setters and getters for use in the program. All variable names are of the form "v_var_name"
+- idle.c
+	- Contains the GLUT Idle callback method.
+- key.c
+	- Contains the GLUT Key callback method.
+- lighting.c/h
+	- Defines methods for setting and adjusting global (scene) lighting settings.
+- main.c
+	- C main routine, GLUT and Scene setup
+- Makefile
+	- The makefile
+- motion.c/h
+	- Defines methods for moving the viewport around within the scene.
+- mouse_move.c
+	- Contains the GLUT Idle Motion callback method.
+- print.c
+	- CSCIx229 Print helper method
+- projection.c
+	- Adapted CSCIx229 Projection method.
+- reshape.c
+	- Contains the GLUT Resphape callback method
+- special.c
+	- Contains the GLUT Special Key callback method
+- textures.c/h
+	- Defines methods for loading and setting the current texture

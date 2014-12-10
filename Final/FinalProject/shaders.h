@@ -11,7 +11,8 @@
 char *readShaderFile(char *filename);
 int writeTextFile(char *filename, char *s);
 
-void load_shaders ();
+void load_shaders();
 void use_shader(int id);
+char* ShaderName();
 
 #endif /* SHADERS_H_ */

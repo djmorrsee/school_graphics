@@ -36,7 +36,7 @@ vector3 v_look_vector = { .x=0, .y=0, .z=-1};
 
 // User View Location
 // This is the "origin" for gluLookAt
-vector3 v_camera_location = {.x=0, .y=0, .z=5};
+vector3 v_camera_location = {.x=0, .y=0, .z=10};
 
 vector3 get_look_position()
 {
@@ -59,8 +59,17 @@ light lights[8] =
 		{.diffuse = { 1, 1, 1, 1}, .specular = { 1, 1, 1, 1}, .ambient = {0,0,0,1}, .position = { 0, 0, 0}},
 		{.diffuse = { 1, 1, 1, 1}, .specular = { 1, 1, 1, 1}, .ambient = {0,0,0,1}, .position = { 0, 0, 0}}
 };
+
+
+
+float v_ambient_intensity = 0;
 //////////
 
 // Shaders
 
-int vshader_mode = 0;
+int v_shader_mode = 0;
+///////////
+
+// Textures
+unsigned int v_textures[16] = { 0 };
+///////////

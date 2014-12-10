@@ -36,6 +36,7 @@ extern vector3 v_camera_location;
 vector3 get_look_position();
 
 // Lighting
+extern float v_ambient_intensity;
 extern light lights[8];
 
 // Shader Modes
@@ -43,6 +44,9 @@ extern light lights[8];
  * 1 - Toon
  * 2 - Per Pixel
  */
-extern int vshader_mode;
+extern int v_shader_mode;
+
+// Textures
+extern unsigned int v_textures[16];
 
 #endif

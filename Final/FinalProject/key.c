@@ -19,9 +19,12 @@ void key(unsigned char ch, int x, int y)
 		v_move_right = true;
 
 	if(ch == 'p')
-		vshader_mode = (vshader_mode + 1) % c_num_shaders;
+		v_shader_mode = (v_shader_mode + 1) % c_num_shaders;
 
-
+	if(ch == 'k')
+		AdjustLighting(0);
+	if(ch == 'l')
+		AdjustLighting(1);
 
 	glutPostRedisplay();
 }

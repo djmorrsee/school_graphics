@@ -1,5 +1,5 @@
 LIBS=-lglut -lGLU -lGL -lm
-CFLG=-O3 -Wall
+CFLG=-O3 -Wall -DGL_GLEXT_PROTOTYPES
 
 # Global Constants and Variables
 glob_const.o	:glob_const.c glob_const.h
@@ -24,10 +24,12 @@ projection.o	:projection.c dj.h
 dj_structures.o	:dj_structures.c dj.h
 dj_primitives.o	:dj_primitives.c dj.h
 lighting.o		:lighting.c lighting.h dj.h
+shaders.o		:shaders.c shaders.h dj.h
+textures.o		:textures.c dj.h
+fatal.o			:fatal.c dj.h
 
 
-dj_utility=print.o projection.o dj_structures.o dj_primitives.o lighting.o
-
+dj_utility=print.o projection.o dj_structures.o dj_primitives.o lighting.o shaders.o textures.o fatal.o
 # Main
 main.o			:main.c dj.h
 
@@ -40,7 +42,7 @@ dj.a: $(dj_utility) $(dj_globals) $(dj_callbacks)
 main:main.o dj.a
 	gcc -O3 -o $@ $^ $(LIBS)
 
-all: clean main
+all: main
 clean:
 	rm -f *.o
 	rm -f *.a

@@ -30,7 +30,7 @@ typedef enum { left=0, right, forward, backward, up, down } facing_t;
 #include "motion.h"
 #include "lighting.h"
 #include "shaders.h"
-
+#include "textures.h"
 
 // GLUT Bound Functions // 
 void display();
@@ -45,6 +45,6 @@ void mouse_click(int button, int state, int x, int y);
 // Helper Functions From CSCIx229 //
 void Print(const char* format, ...);
 void Project();
-unsigned int LoadBMPTexture(const char* filepath);
+void Fatal(const char* format , ...);
 
 #endif
