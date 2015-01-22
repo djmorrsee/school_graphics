@@ -1,0 +1,23 @@
+To build, make all
+To run, ./scene
+
+The scene was created using helper functions built up througout the assignments, found in dj_primitives.h
+
+The pole will act as a street light if this scene has lighting introduced.
+
+Controls:
+
+- Rotate View with Arrow Keys
+- Translate View with WSAD (W moves 'north' relative to worldspace)
+
+Press 'k' to switch between orthographic (default) and perspective view.
+
+
+Comments:
+
+The scene is currently setup to apply global rotations after global translations.
+This results in w always moving in the same direction relative to the scene.
+
+Doing it the other way made for a sort of fist person type of control, but it would skew in extreme ways if both the position and rotation vectors were large. 
+
+For stability, I left it as it is, and will work to get a better feeling control scheme.

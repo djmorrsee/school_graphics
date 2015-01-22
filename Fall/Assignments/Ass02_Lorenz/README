@@ -1,0 +1,28 @@
+Lorenz Attractor Visualization
+
+To Compile: make lorenz
+
+Controls:
+Parameter S:
+	Increase: 'q'
+	Decrease: 'a'
+
+Parameter B
+	Increase: 'w'
+	Decrease: 's'
+
+Parameter R
+	Increase: 'e'
+	Decrease: 'd'
+
+Rotate View:
+	X Axis: Up/Down Arrow Keys
+	Y Axis: Left/Right Arrow Keys
+
+**RESUBMISSION NOTES**
+
+Fixed aspect ratio scaling. The visual now scales with the height of the window, but does not stretch. The key was the glViewport() call.
+
+Fixed Text Color Rendering error. Calling glColor() after glWindoPos() caused the color call to be lost.
+
+Adjusted some parameters to make the rendered effect more visually appealing.
