@@ -44,6 +44,7 @@ extern light lights[8];
 
 // Shader Modes
 /* 0 - None
+ * 1 - NDC->RGB
  */
 extern int v_shader_mode;
 

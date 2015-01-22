@@ -36,7 +36,6 @@ typedef enum { left=0, right, forward, backward, up, down } facing_t;
 
 // DJ Functions
 #include "dj_structures.h"
-#include "dj_primitives.h"
 #include "dj_scene/motion.h"
 #include "dj_scene/lighting.h"
 #include "dj_resources/shaders.h"

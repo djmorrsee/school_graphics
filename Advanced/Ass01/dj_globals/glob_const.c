@@ -13,4 +13,4 @@ const double c_rot_y_speed = 0.1;
 const double c_move_speed = 0.5;
 
 
-const int c_num_shaders = 3; // None counts as a shader
+const int c_num_shaders = 2; // None counts as a shader
