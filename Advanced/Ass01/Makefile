@@ -14,7 +14,7 @@ main.o			:main.c dj.h
 	gcc -c $(CFLG) $<
 
 main:main.o $(libraries)
-	gcc -O3 -o $@ $^ $(LIBS) 
+	gcc -O3 -o $@ $^ $(LIBS) $(CFLG) 
 
 all: clean main
 clean:
