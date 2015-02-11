@@ -1,0 +1,1 @@
+find . -iregex '.*\.c'
