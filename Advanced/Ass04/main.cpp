@@ -127,7 +127,7 @@ void LoadLights () {
 void SetupScene () {
 	// Load Models, Textures, Shaders etc...
 	v_shader_mode = CreateShaderProg("libs/dj_resources/shaders/gl430.vert", "libs/dj_resources/shaders/gl430.frag"); 
-	load_obj("libs/dj_resources/models/monkeybox.obj", v_data_buffer);
+	//load_obj("libs/dj_resources/models/monkeybox.obj", v_data_buffer);
 	InitCube();
 }
 

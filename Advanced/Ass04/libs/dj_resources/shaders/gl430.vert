@@ -1,10 +1,8 @@
 #version 330 core
 
-
 uniform mat4 ModelViewMatrix;
 uniform mat4 ProjectionMatrix;
 uniform mat3 NormalMatrix;
-
 
 // Vertex Attributs 
 layout(location = 0) in vec4 VertexPosition;

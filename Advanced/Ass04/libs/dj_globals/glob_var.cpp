@@ -35,6 +35,7 @@ float v_clipping_plane = 1000;
 // User View Rotation
 float v_x_persp_rot = -90;
 float v_y_persp_rot = 0;
+float v_rot_speed = 5;
 
 // User View Location
 unsigned int v_object_buffer;

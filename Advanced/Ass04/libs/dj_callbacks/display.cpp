@@ -22,7 +22,8 @@ void display() {
 	// The Projection Matrix (ortho doesn't work)
 	//~ v_projection_matrix = glm::ortho(-2.f, 2.f, -2.f, 2.f, 0.001f, 100000.0f);
 	v_projection_matrix = glm::perspective(30.0f, ratio, 0.001f, 10000.0f);
-	
+	v_model_view_matrix = view * v_model_view_matrix;
+
 	// The Model Matrix
 	
 	float x_rot_rads = v_x_persp_rot * M_PI / 180.0f;
@@ -30,10 +31,9 @@ void display() {
 	
 	v_model_view_matrix = glm::rotate(v_model_view_matrix, x_rot_rads, glm::vec3(1.0f, 0, 0));
 	v_model_view_matrix = glm::rotate(v_model_view_matrix, y_rot_rads, glm::vec3(0, 1.0f, 0));
-	v_model_view_matrix = glm::scale(v_model_view_matrix, glm::vec3(0.2f, 0.2f, 0.2f));
+	v_model_view_matrix = glm::scale(v_model_view_matrix, glm::vec3(0.5f, 0.5f, 0.5f));
 	
 	// Model-View Matrix
-	v_model_view_matrix = view * v_model_view_matrix;
 	
 	float *mvm = glm::value_ptr(v_model_view_matrix);	
 	float *pm = glm::value_ptr(v_projection_matrix);
