@@ -57,9 +57,10 @@ void display() {
 		printf("Error Sending PM Uniform\n");
 	
 	loc = glGetUniformLocation(v_shader_mode, "NormalMatrix");
-	if (loc >= 0)
-		glUniformMatrix3fv(loc, 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(v_model_view_matrix))));
-	else
+	if (loc >= 0) {
+		glm::mat3 nm = glm::transpose(glm::inverse(glm::mat3(v_model_view_matrix)));
+		glUniformMatrix3fv(loc, 1, GL_FALSE, glm::value_ptr(nm));
+	} else
 		printf("Error Sending Normal Matrix\n");
 		
 	loc = glGetUniformLocation(v_shader_mode, "LightPosition");
