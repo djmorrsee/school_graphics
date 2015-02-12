@@ -7,23 +7,26 @@
 
 #include "../../dj.h"
 
-// Motion
+// Screen Dimensions
+int v_screen_width = 600;
+int v_screen_height = 600;
+/////////
 
+// Motion
 bool v_move_forward = false;
 bool v_move_backward = false;
 bool v_move_left = false;
 bool v_move_right = false;
-
 /////////
 
-
 // Viewport
-bool v_rotate_view = false;
 bool v_use_perspective = false;
+bool v_rotate_view = false; // Enable Mouse Rotation?
 
-int v_window_width = 0;
-int v_window_height = 0;
+int v_window_width = dj_constants::c_window_size;
+int v_window_height = dj_constants::c_window_size;
 
+float v_dim = 10;
 float v_field_of_view = 45;
 float v_aspect_ratio = 1;
 float v_clipping_plane = 1000;
@@ -33,24 +36,22 @@ float v_clipping_plane = 1000;
 float v_x_persp_rot = -90;
 float v_y_persp_rot = 0;
 
-float v_light_x = 0;
-float v_light_y = 0;
-
-float v_dim = 10;
-
 // User View Location
 unsigned int v_object_buffer;
 float v_data_buffer[100000] = { 0.0f };
+///////
 
+
+// GLM Matrices
 glm::mat4 v_model_view_matrix = glm::mat4();
 glm::mat4 v_projection_matrix = glm::mat4();
-
 ///////////////////////////
 
 
 // Lights
 
-float v_ambient_intensity = 0.2;
+float v_ambient_intensity = 0.2f;
+extern LightProperties v_lights[8] = { LightProperties() };
 //////////
 
 // Shaders

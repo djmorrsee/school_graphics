@@ -46,6 +46,7 @@ extern glm::mat4 v_projection_matrix;
 
 // Lighting
 extern float v_ambient_intensity;
+extern LightProperties v_lights[8];
 
 // Shader Modes
 /* 0 - None

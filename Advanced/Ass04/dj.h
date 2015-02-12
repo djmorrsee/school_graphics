@@ -16,38 +16,57 @@
 #include <math.h>
 
 #define GLM_FORCE_RADIANS
+#define GL_GLEXT_PROTOTYPES
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
 #ifdef USEGLEW
 #include <GL/glew.h>
 #endif
-
-#define GL_GLEXT_PROTOTYPES
-
-#include "GLFW/glfw3.h"
 
 #define Cos(th) cos(3.1415926/180*(th))
 #define Sin(th) sin(3.1415926/180*(th))
 
 typedef enum { left=0, right, forward, backward, up, down } facing_t;
 
+//// DJ Functions
+// Motion
+void Rotate(float x, float y);
+void Move(facing_t dir);
+
+// Lighting
+struct LightProperties {
+	bool isEnabled;
+	bool isLocal;
+	
+	glm::vec3 color;
+	glm::vec3 position;
+	
+	glm::vec3 halfVector;
+	
+	// Add Attenuation if you so desire
+	// Spot light properties would also go here.
+};
+
 // Program Constants and Variables
 #include "libs/dj_globals/glob_const.h"
 #include "libs/dj_globals/glob_var.h"
 
-// DJ Functions
-#include "libs/dj_scene/motion.h"
-#include "libs/dj_scene/lighting.h"
 #include "libs/dj_resources/shaders.h"
 #include "libs/dj_resources/textures.h"
 
 void load_obj(const char* filename, float *buffer);
 
 // GLUT Bound Functions // 
-void display(GLFWwindow* window); 					// display.c
+void display(); 					// display.c
 void reshape(int x, int y);				// reshape.c
 void special(int key, int x, int y);			// special.c
 void key(unsigned char ch, int x, int y);		// key.c

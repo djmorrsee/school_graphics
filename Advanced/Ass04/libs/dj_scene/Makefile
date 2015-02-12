@@ -3,14 +3,13 @@ CFLG=-O3 -Wall
 
 LIB_NAME=dj_scene
 
-FILENAMES = motion
+FILENAMES = motion 
 BINARIES = $(foreach name,$(FILENAMES), bin/$(name).o)
-HEADERS = $(foreach name,$(FILENAMES), $(name).h)
 
-$(LIB_NAME).a:$(BINARIES) $(HEADERS)
+$(LIB_NAME).a:$(BINARIES)
 	ar -rcs ../$@ $^ ../../dj.h
 
 bin/%.o : %.cpp
-	@g++ -c $(CFLG) $< -o $@
+	g++ -c $(CFLG) $< -o $@
 
 all: $(LIB_NAME).a

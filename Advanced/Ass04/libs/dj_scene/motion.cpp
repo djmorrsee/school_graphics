@@ -1,5 +1,4 @@
 #include "../../dj.h"
-#include "motion.h"
 
 void Refresh ()
 {
@@ -28,15 +27,23 @@ void Move(facing_t dir)
 	{
 		case left:
 			//~ lights[0].position.x -= 1;
+			v_x_persp_rot += 1;
 			break;
 		case right:
 			//~ lights[0].position.x += 1;
+			v_x_persp_rot -= 1;
 			break;
 		case forward:
 			//~ lights[0].position.z -= 1;
+			v_y_persp_rot += 1;
 			break;
 		case backward:
 			//~ lights[0].position.z += 1;
+			v_y_persp_rot -= 1;
+			break;
+		case up:
+			break;
+		case down:
 			break;
 	}
 /*	switch(dir)

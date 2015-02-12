@@ -1,6 +1,5 @@
-LIBS=-lGL -lGLU -lm
+LIBS=-lGL -lGLU -lm -lglut -lpthread
 CFLG=-O3 -Wall
-GLFWLIBS=-lX11 -lXxf86vm -lXrandr -lpthread -lXi -lXinerama -lXcursor
 
 .PHONY: all clean
 
@@ -23,7 +22,7 @@ main.o:main.cpp
 	g++ -c $(CFLG) $< 
 
 main:main.o $(DJ_LIBS)
-	g++ main.o -o main GLFW/libglfw3.a $(CFLG) $(GLFWLIBS) $(DJ_LIBS) $(LIBS) GLFW/glfw3.h 
+	g++ main.o -o main $(CFLG) $(GLFWLIBS) $(DJ_LIBS) $(LIBS)
 
 all: clean main
 

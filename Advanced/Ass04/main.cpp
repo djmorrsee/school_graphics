@@ -2,8 +2,11 @@
  * 
  */
 #include "dj.h"
+#include <pthread.h>
 
-void SetupGLFW(GLFWwindow *window);
+void SetupScene();
+//~ void SetupGLFW(GLFWwindow *window);
+void SetupGLUT(int argc, char* argv[]);
 
 void error_callback(int error, const char* description) {
 	printf("%s", description);
@@ -11,33 +14,37 @@ void error_callback(int error, const char* description) {
 }
 
 int main(int argc, char* argv[]) {
-	GLFWwindow *main_window;
+	//~ GLFWwindow *main_window;
+	//~ 
+	//~ SetupGLFW(main_window);
+	//~ printf("%d", main_window == NULL);
+//~ 
+	//~ glfwDestroyWindow(main_window);
+//~ 
+	//~ glfwTerminate();
 	
-	SetupGLFW(main_window);
-	printf("%d", main_window == NULL);
-
-	glfwDestroyWindow(main_window);
-
-	glfwTerminate();
+	// Junk Pthread Usage
+	int i = pthread_getconcurrency();
+	
+	SetupGLUT(argc, argv);
 	return 0;
 }
-
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, GL_TRUE);
-	
-	if (action == GLFW_PRESS)
-		if (key == GLFW_KEY_W)
-			v_x_persp_rot += 1;
-		else if (key == GLFW_KEY_S)
-			v_x_persp_rot -= 1;
-		else if (key == GLFW_KEY_A)
-			v_y_persp_rot += 1;
-		else if (key == GLFW_KEY_D)
-			v_y_persp_rot -= 1;
-		
-	
-}
+//~ 
+//~ static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	//~ if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		//~ glfwSetWindowShouldClose(window, GL_TRUE);
+	//~ 
+	//~ if (action == GLFW_PRESS)
+		//~ if (key == GLFW_KEY_W)
+			//~ v_x_persp_rot += 1;
+		//~ else if (key == GLFW_KEY_S)
+			//~ v_x_persp_rot -= 1;
+		//~ else if (key == GLFW_KEY_A)
+			//~ v_y_persp_rot += 1;
+		//~ else if (key == GLFW_KEY_D)
+			//~ v_y_persp_rot -= 1;
+		//~ 
+//~ }
 
 const int cube_size=36;
 const float cube_data[] =  // Vertex data
@@ -113,41 +120,73 @@ void InitMonkey()
 	
 }
 
-void SetupGLFW(GLFWwindow *window) {
-
-	// GL Settings //
-	if (!glfwInit())
-		exit(EXIT_FAILURE);
-
-	window = glfwCreateWindow(640, 480, "GLFW Success", NULL, NULL);
+void LoadLights () {
 	
-	if (!window) {
-		printf("Error creating window context\n");
-		glfwTerminate();
-		exit(EXIT_FAILURE);
-	}
-	
-	glfwSetKeyCallback(window, key_callback);
-	glfwSetErrorCallback(error_callback);
-
-	
-	// Create Object Buffer From OBJ File
-	load_obj("libs/dj_resources/models/monkeybox.obj", v_data_buffer);
-
-	printf("Testing\n");
-	printf("wat %d\n", sizeof(v_data_buffer));
-		
-	//~ InitCube();
-	glfwMakeContextCurrent(window);
-	glfwSwapInterval(1);
-	v_shader_mode = CreateShaderProg("libs/dj_resources/shaders/gl430.vert", "libs/dj_resources/shaders/gl430.frag"); 
-
-	while(!glfwWindowShouldClose(window)) 
-	{
-			display(window);
-			glfwSwapBuffers(window);
-			glfwPollEvents();
-	}
 }
+
+void SetupScene () {
+	// Load Models, Textures, Shaders etc...
+	v_shader_mode = CreateShaderProg("libs/dj_resources/shaders/gl430.vert", "libs/dj_resources/shaders/gl430.frag"); 
+	load_obj("libs/dj_resources/models/monkeybox.obj", v_data_buffer);
+	InitCube();
+}
+
+void SetupGLUT(int argc, char* argv[]) 
+{
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE | GLUT_STENCIL);
+	glutInitWindowSize(v_window_width, v_window_height);
+	glutCreateWindow("Advanced Graphics Assignment 04");
+
+	SetupScene();
+
+	// Callback Bindings
+	glutDisplayFunc(display);
+	glutReshapeFunc(reshape);
+	glutSpecialFunc(special);
+	glutKeyboardFunc(key);
+	glutKeyboardUpFunc(key_up);
+	glutMouseFunc(mouse_click);
+	glutMotionFunc(mouse_move);
+	glutMotionFunc(mouse_move);
+	glutMainLoop();
+}
+
+//~ void SetupGLFW(GLFWwindow *window) {
+//~ 
+	//~ // GL Settings //
+	//~ if (!glfwInit())
+		//~ exit(EXIT_FAILURE);
+//~ 
+	//~ window = glfwCreateWindow(640, 480, "GLFW Success", NULL, NULL);
+	//~ 
+	//~ if (!window) {
+		//~ printf("Error creating window context\n");
+		//~ glfwTerminate();
+		//~ exit(EXIT_FAILURE);
+	//~ }
+	//~ 
+	//~ glfwSetKeyCallback(window, key_callback);
+	//~ glfwSetErrorCallback(error_callback);
+//~ 
+	//~ 
+	//~ // Create Object Buffer From OBJ File
+	//~ 
+	//~ load_obj("libs/dj_resources/models/monkeybox.obj", v_data_buffer);
+		//~ 
+	//~ InitCube();
+	//~ 
+	//~ 
+	//~ glfwMakeContextCurrent(window);
+	//~ glfwSwapInterval(1);
+	//~ v_shader_mode = CreateShaderProg("libs/dj_resources/shaders/gl430.vert", "libs/dj_resources/shaders/gl430.frag"); 
+//~ 
+	//~ while(!glfwWindowShouldClose(window)) 
+	//~ {
+			//~ display(window);
+			//~ glfwSwapBuffers(window);
+			//~ glfwPollEvents();
+	//~ }
+//~ }
 
 

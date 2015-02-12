@@ -10,13 +10,13 @@ void key(unsigned char ch, int x, int y)
 		exit(0);
 
 	if(ch == 'w')
-		v_move_forward = true;
+		v_x_persp_rot += 1;
 	if (ch == 's')
-		v_move_backward = true;
+		v_x_persp_rot -= 1;
 	if (ch == 'a')
-		v_move_left = true;
+		v_y_persp_rot += 1;
 	if (ch == 'd')
-		v_move_right = true;
+		v_y_persp_rot -= 1;
 
 	if(ch == 'p')
 		v_shader_mode = (v_shader_mode + 1) % dj_constants::c_num_shaders;
