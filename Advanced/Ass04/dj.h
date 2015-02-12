@@ -10,6 +10,7 @@
 #include <stdarg.h>
 #include <stdbool.h>
 
+#include <sstream>
 #include <string.h>
 #include <vector>
 #include <math.h>
@@ -43,10 +44,7 @@ typedef enum { left=0, right, forward, backward, up, down } facing_t;
 #include "libs/dj_resources/shaders.h"
 #include "libs/dj_resources/textures.h"
 
-void load_obj(const char* filename, std::vector<glm::vec4> &verts, 
-									std::vector<glm::vec3> &norms, 
-									std::vector<glm::vec3> &colors, 
-									std::vector<glm::vec2> &tcs);
+void load_obj(const char* filename, float *buffer);
 
 // GLUT Bound Functions // 
 void display(GLFWwindow* window); 					// display.c

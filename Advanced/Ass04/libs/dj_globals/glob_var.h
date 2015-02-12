@@ -5,6 +5,7 @@
 #define __dj_vars
 
 #include <stdbool.h>
+#include <vector>
 
 // Motion
 extern bool v_move_forward;
@@ -30,6 +31,9 @@ extern float v_light_x;
 extern float v_light_y;
 
 extern float v_dim;
+
+extern unsigned int v_object_buffer;
+extern float v_data_buffer[100000];
 
 extern glm::mat4 v_model_view_matrix;
 extern glm::mat4 v_projection_matrix;

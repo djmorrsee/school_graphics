@@ -1,4 +1,4 @@
-#version 430 core
+#version 330 core
 
 // Input from vert
 in vec3 FrontColor;

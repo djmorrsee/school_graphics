@@ -1,4 +1,4 @@
-#version 430 core
+#version 330 core
 
 // Transformation Matrices
 uniform mat4 ModelViewMatrix;

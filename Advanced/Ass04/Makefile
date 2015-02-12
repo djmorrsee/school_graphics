@@ -2,6 +2,8 @@ LIBS=-lGL -lGLU -lm
 CFLG=-O3 -Wall
 GLFWLIBS=-lX11 -lXxf86vm -lXrandr -lpthread -lXi -lXinerama -lXcursor
 
+.PHONY: all clean
+
 libs/%.a:
 	cd libs/$* && make all
 

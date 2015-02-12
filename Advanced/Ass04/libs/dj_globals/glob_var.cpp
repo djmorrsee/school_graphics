@@ -39,6 +39,9 @@ float v_light_y = 0;
 float v_dim = 10;
 
 // User View Location
+unsigned int v_object_buffer;
+float v_data_buffer[100000] = { 0.0f };
+
 glm::mat4 v_model_view_matrix = glm::mat4();
 glm::mat4 v_projection_matrix = glm::mat4();
 
