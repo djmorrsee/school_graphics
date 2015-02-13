@@ -35,7 +35,7 @@ void main() {
 	
 	vec3 scatteredLight = GlobalAmbient + vec3(1, 1, 1) * diffuse * attenuation;
 	vec3 reflectedLight = vec3(1, 1, 1) * specular * attenuation;
-	vec3 rgb = min(FrontColor.xyz * scatteredLight + reflectedLight, vec3(1.0));
+	vec3 rgb = min(FrontColor.xyz * scatteredLight + reflectedLight, vec3(1.0)) * 2;
 	
 	Fragcolor = min(vec4(rgb, 1), vec4(1.0));
 }

@@ -51,7 +51,7 @@ glm::mat4 v_projection_matrix = glm::mat4();
 
 // Lights
 
-float v_ambient_intensity = 0.8f;
+float v_ambient_intensity = 1.0f;
 extern LightProperties v_lights[8] = { LightProperties() };
 //////////
 

@@ -1,2 +1,8 @@
 #Homework 4: OpenGL 3.x +
 
+This is a submission of an incomplete Homework. I bricked my working machine, and lost a lot of data.
+
+The scene consists of a lit cube, completely in the programmable pipeline. A single light and diffuse shading is done.
+
+What was lost was specular lighting, texture support as well as most of an obj loader to create Array Buffers.
+
