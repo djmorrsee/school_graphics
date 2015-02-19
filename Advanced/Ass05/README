@@ -1,0 +1,41 @@
+# Assignment 05: WebGL
+### Daniel Morrissey
+
+The purpose of this assignment was to gain familiarity with the WebGL 
+flavor of OpenGL. 
+
+I used ex06 as a starting place, and heavily relied on the following 
+sites for code samples:
+
+>- https://developer.mozilla.org/en-US/docs/Web/WebGL
+
+## To Run
+
+chromium-browser --allow-file-access-from-files ass05.html
+
+**OR**
+
+Just open it in Firefox.
+
+Both browsers were tested, FireFox seems to run better.
+
+## Notes
+
+>- Fully lit (no specular) and textured, with normals built as well.
+>- Rotate the view with the mouse button, or via the Animate Box button
+>- Cause the light to orbit with the Animate Light button
+>- The first frame that gets displayed usually wont have textures loaded 
+yet, as they are lazy loaded. Once the textures are loaded, they should 
+be drawn properly.
+
+## Other Comments
+>- Perhaps its a result of the "friendliness" of javascript, but I was 
+very much able to get a better grasp of how the ArrayBuffer system works 
+after doing this assignment. Theres less overhead than with C.
+
+>- Leagues easier to debug WebGL, even with shaders. Firefox proved to 
+provide extremely helpful console messages, which was a nice contrast 
+to things just segfaulting in the past.
+
+>- Theres no easy way to draw axes.
+ 
