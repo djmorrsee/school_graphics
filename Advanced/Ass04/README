@@ -6,3 +6,8 @@ The scene consists of a lit cube, completely in the programmable pipeline. A sin
 
 What was lost was specular lighting, texture support as well as most of an obj loader to create Array Buffers.
 
+To Build: make all
+
+To Run: ./main
+
+Controls: Click and drag to rotate cube.
