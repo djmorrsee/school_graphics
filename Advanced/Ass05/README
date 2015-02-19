@@ -9,33 +9,41 @@ sites for code samples:
 
 >- https://developer.mozilla.org/en-US/docs/Web/WebGL
 
-## To Run
+As such, I make use of the canvasmatrix.js library.
 
-chromium-browser --allow-file-access-from-files ass05.html
+### To Run
+
+The open_page.sh script runs the following:
+
+	chromium-browser --allow-file-access-from-files ass05.html
+	
+If your chromium is called something else, you'll need to adjust for 
+your environment.
 
 **OR**
 
-Just open it in Firefox.
+Just open ass05.html in Firefox.
 
-Both browsers were tested, FireFox seems to run better.
+Both browsers were tested, FireFox seems to run better, chromium seems 
+to look better (colors are more vivid, may be completely in my mind).
 
-## Notes
+### Notes
 
->- Fully lit (no specular) and textured, with normals built as well.
->- Rotate the view with the mouse button, or via the Animate Box button
->- Cause the light to orbit with the Animate Light button
->- The first frame that gets displayed usually wont have textures loaded 
+- Fully lit (no specular) and textured, with normals built as well.
+- Rotate the view with the mouse button, or via the Animate Box button
+- Cause the light to orbit with the Animate Light button
+- The first frame that gets displayed usually wont have textures loaded 
 yet, as they are lazy loaded. Once the textures are loaded, they should 
 be drawn properly.
 
-## Other Comments
->- Perhaps its a result of the "friendliness" of javascript, but I was 
+### Other Comments
+- Perhaps its a result of the "friendliness" of javascript, but I was 
 very much able to get a better grasp of how the ArrayBuffer system works 
 after doing this assignment. Theres less overhead than with C.
 
->- Leagues easier to debug WebGL, even with shaders. Firefox proved to 
+- Leagues easier to debug WebGL, even with shaders. Firefox proved to 
 provide extremely helpful console messages, which was a nice contrast 
 to things just segfaulting in the past.
 
->- Theres no easy way to draw axes.
+- Theres no easy way to draw axes.
  
