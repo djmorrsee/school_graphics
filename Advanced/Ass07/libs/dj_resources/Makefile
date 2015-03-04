@@ -5,10 +5,10 @@ LIB_NAME=dj_resources
 
 FILENAMES = objects shaders textures
 BINARIES = $(foreach name,$(FILENAMES), bin/$(name).o)
-HEADERS = $(foreach name,$(FILENAMES), bin/$(name).h)
+HEADERS = $(foreach name,$(FILENAMES), $(name).h)
 
 $(LIB_NAME).a:$(BINARIES)
-	ar -rcs ../$@ $^ ../../dj.h
+	ar -rcs ../$@ $^ models/new_monkey.h $(HEADERS) ../../dj.h
 
 bin/%.o : %.cpp
 	gcc -c $(CFLG) $< -o $@

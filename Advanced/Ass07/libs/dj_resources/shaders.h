@@ -8,7 +8,7 @@
 #ifndef SHADERS_H_
 #define SHADERS_H_
 
-int load_shader(std::string vertname, std::string fragname);
+int load_shader(const char* vertname, const char* fragname);
 
 // Get a friendly name for the current shader
 std::string ShaderName();

@@ -12,38 +12,41 @@ int main(int argc, char* argv[]) {
 	return 0;
 }
 
-//~ void InitMonkey()
-//~ {   
-	//~ //  Copy data to vertex buffer object
-    //~ glGenBuffers(1,&v_objects[0]);
-    //~ glBindBuffer(GL_ARRAY_BUFFER,v_object_buffer);
-    //~ glBufferData(GL_ARRAY_BUFFER,sizeof(v_data_buffer),v_objects[0],GL_STATIC_DRAW);
-//~ 
-	//~ //  Unbind this buffer
-	//~ glBindBuffer(GL_ARRAY_BUFFER,0);
-	//~ 
-//~ }
-
 void LoadShaders() {
 	v_current_shader_mode = 0;
 	
-	std::string vert0 = "libs/dj_resources/name.vert";
-	std::string frag0 = "libs/dj_resources/name.frag";
+	std::string vert0 = "libs/dj_resources/shaders/gl430.vert";
+	std::string frag0 = "libs/dj_resources/shaders/gl430.frag";
 	
-	v_shader_programs[v_current_shader_mode] = load_shader(vert0, frag0); // No File Suffix!
+	std::string frag1 = "libs/dj_resources/shaders/laplacian.frag";
 	
+	std::string frag2 = "libs/dj_resources/shaders/edge.frag";
+	
+	
+	
+	v_shader_programs[0] = load_shader(vert0.c_str(), frag0.c_str());
+	v_shader_programs[1] = load_shader(NULL, frag1.c_str());
+	v_shader_programs[2] = load_shader(NULL, frag2.c_str());
 	
 	// Repeat 
 }
 
 void LoadObjects() {
-	std::string obj_file = "libs/dj_resources/objects/monkey.obj";
-	dj_object monkey = load_object(obj_file);
+	v_objects[0] = create_object_from_parsed();
 	
 }
 
 void LoadTextures() {
-	v_textures[0] = load_texture("libs/dj_resources/textures/monkey.bmp");
+	// Handled in object creation!
+	//v_textures[0] = load_texture("libs/dj_resources/textures/monkey.bmp");   
+	
+	//  Image texture
+   glGenTextures(1,&v_textures[0]);
+   glBindTexture(GL_TEXTURE_2D,v_textures[0]);
+   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
+   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
 	
 	// Repeat
 }

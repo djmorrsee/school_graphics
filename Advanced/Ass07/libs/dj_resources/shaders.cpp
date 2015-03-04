@@ -110,9 +110,9 @@ int CreateShaderProg(const char* VertFile,const char* FragFile)
 }
 
 
-int load_shader(std::string vertname, std::string fragname)
+int load_shader(const char* vertname, const char* fragname)
 {
-	return CreateShaderProg(vertname.c_str(), fragname.c_str());
+	return CreateShaderProg(vertname, fragname);
 }
 
 std::string ShaderName()

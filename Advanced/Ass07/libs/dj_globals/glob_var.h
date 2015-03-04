@@ -35,7 +35,7 @@ extern bool v_move_right;
 extern bool v_rotate_view;
 
 // Objects
-extern int v_objects[8];
+extern dj_object v_objects[8];
 
 // Textures
 extern unsigned int v_textures[16];

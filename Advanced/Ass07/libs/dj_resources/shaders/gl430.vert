@@ -1,37 +1,31 @@
-#version 330 core
-
+// in == attribute in a vert shader, varying in frag
+// out == varying in a vert shader
 uniform mat4 ModelViewMatrix;
 uniform mat4 ProjectionMatrix;
-uniform mat3 NormalMatrix;
+uniform mat4 NormalMatrix;
 
-// Vertex Attributs 
-layout(location = 0) in vec4 VertexPosition;
-layout(location = 1) in vec3 VertexColor;
-layout(location = 2) in vec3 VertexNormal;
+uniform vec3 LightPosition;
+
+attribute vec4 XYZW;
+attribute vec3 RGB;
+attribute vec3 NORM;
+attribute vec2 TEX;
 
 // Output
-out vec3 FrontColor;
-out vec3 Normal;
-out vec4 Position;
-
-out vec3 LightDirection;
-out vec3 HalfVector;
-out float Attenuation;
+varying vec3 color;
+varying vec3 lighting;
+varying vec2 texture_coord;
 
 void main()
 {
-	FrontColor = VertexColor;
-	Normal = normalize(NormalMatrix * VertexNormal);
-	Position = ModelViewMatrix * VertexPosition;
+	color = RGB;
+	texture_coord = TEX;
 	
-	//~ LightDirection = LightPosition - vec3(VertexPosition);
-	//~ float lightDistance = length(LightDirection);
-	//~ 
-	//~ LightDirection = LightDirection / lightDistance;
-	//~ 
-	//~ Attenuation = 0.5f;
-	//~ 
-	//~ HalfVector = normalize(LightDirection + EyePosition);
+	vec3 ambient = vec3(0.2);
+	vec3 dirLightRGB = vec3(0.5, 0.5, 0.5);
 	
-	gl_Position = ProjectionMatrix * ModelViewMatrix * VertexPosition;
+	color = RGB;
+		
+	gl_FrontColor = vec4(color, 1.0);
+	gl_Position = ProjectionMatrix * ModelViewMatrix * vec4(XYZW.xyz, 1.0);
 }

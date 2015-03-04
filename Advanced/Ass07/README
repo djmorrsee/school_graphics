@@ -1,13 +1,49 @@
-#Homework 4: OpenGL 3.x +
+Homework 7: Image Processing
+============================
 
-This is a submission of an incomplete Homework. I bricked my working machine, and lost a lot of data.
+## Daniel Morrissey
 
-The scene consists of a lit cube, completely in the programmable pipeline. A single light and diffuse shading is done.
+The purpose of this assignment was to explore the image processing capabilities
+of opengl.
 
-What was lost was specular lighting, texture support as well as most of an obj loader to create Array Buffers.
+For my submission, I am drawing a textured monkey via ARRAY_BUFFERS 
+and then applying two different edge detection algorithms depending on the shader.
 
-To Build: make all
+	Shader 0: 
+		Programmable pipeline only
+		
+	Shader 1:
+		Laplacian edge detection shader from ex11
+		
+	Shader 2:
+		My own edge detection algorithm
+		Adapted from:
+			- http://coding-experiments.blogspot.com/2010/06/edge-detection.html
+	
 
-To Run: ./main
+## To Build/Run
 
-Controls: Click and drag to rotate cube.
+	make all
+	./main
+
+## Controls
+
+	- Click Mouse and Drag to move
+	- +/- to zoom in and out
+	- l to switch from perpective/orthogonal projection
+	- m/n to switch between shader modes
+
+## Other Operations
+
+Data for the array buffers was parsed externally via my own python parsing script.
+
+	python parseobj.py objfile.obj
+	
+Grepmake:
+
+	./grepmake runs 'make all' and greps the output for 'warning' or 'error'
+
+## Notes
+
+Total time: 8 hours, put a lot into project structure, am trying to 
+make my projects modular, to minimize work each subsequent week.

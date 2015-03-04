@@ -105,6 +105,6 @@ unsigned int LoadTexBMP(const char* file)
    return texture;
 }
 
-int load_texture(std::string filename) {
-	return (int)LoadTexBMP(filename.c_str());
+unsigned int load_texture(std::string filename) {
+	return (unsigned int)LoadTexBMP(filename.c_str());
 }

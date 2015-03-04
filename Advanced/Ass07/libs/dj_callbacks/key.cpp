@@ -20,7 +20,24 @@ void key(unsigned char ch, int x, int y)
 
 	if (ch == 'l')
 		v_use_perspective = !v_use_perspective;
+		
+	if (ch == 'm' || ch == 'M') {
+		v_current_shader_mode += 1;
+		v_current_shader_mode %= 3;
+	}
 
+	if (ch == 'n' || ch == 'N') {
+		v_current_shader_mode -= 1;
+		v_current_shader_mode %= 3;
+	}
+	
+	if(ch == '-' || ch == '_') {
+		v_dim += 0.5f;
+	} else if (ch == '+' || ch == '=') {
+		v_dim -= 0.5f;
+		v_dim = v_dim < 0 ? 0 : v_dim;
+	}
+	
 }
 
 void key_up(unsigned char ch, int x, int y)

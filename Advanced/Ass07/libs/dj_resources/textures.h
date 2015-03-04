@@ -8,6 +8,6 @@
 #ifndef TEXTURES_H_
 #define TEXTURES_H_
 
-int load_texture(std::string filename);
+unsigned int load_texture(std::string filename);
 
 #endif /* TEXTURES_H_ */

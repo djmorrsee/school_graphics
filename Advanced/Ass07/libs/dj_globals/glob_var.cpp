@@ -14,7 +14,7 @@ glm::vec2 v_window_size =
 	glm::vec2(dj_constants::c_window_size, dj_constants::c_window_size);
 
 // Viewport
-float v_dim = 10;
+float v_dim = 3;
 float v_field_of_view = 45;
 float v_aspect_ratio = 1;
 float v_clipping_plane = 1000;
@@ -39,7 +39,7 @@ bool v_move_right = false;
 bool v_rotate_view = false;
 
 // Objects
-int v_objects[8] = { 0 };
+dj_object v_objects[8];
 
 // Textures
 unsigned int v_textures[16] = { 0 };

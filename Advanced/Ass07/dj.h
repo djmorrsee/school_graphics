@@ -40,15 +40,14 @@
 #include "libs/dj_scene/lighting.h"
 #include "libs/dj_scene/motion.h"
 
-// Program Constants and Variables
-#include "libs/dj_globals/glob_const.h"
-#include "libs/dj_globals/glob_var.h"
-
 // Shader And Texture Helpers
 #include "libs/dj_resources/shaders.h"
 #include "libs/dj_resources/textures.h"
 #include "libs/dj_resources/objects.h"
 
+// Program Constants and Variables
+#include "libs/dj_globals/glob_const.h"
+#include "libs/dj_globals/glob_var.h"
 
 // GLUT Bound Functions // 
 void display(); 					// display.c
