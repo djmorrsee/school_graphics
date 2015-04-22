@@ -25,7 +25,7 @@ int v_cursor_y = 0;
 int v_cursor_down = 0;
 
 // Viewport
-float v_dim = 1;
+float v_dim = 0.5;
 float v_field_of_view = 45;
 float v_aspect_ratio = 1;
 float v_clipping_plane = 100000;
