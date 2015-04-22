@@ -9,6 +9,10 @@
 
 #include "../dj.h"
 
+
+// *** Scene Specific Vars *** //
+int v_block_texture_id = -1;
+
 // Drawing Vars (specific to Ass08)
 int v_draw_color = 1;
 bool v_first_draw = true;

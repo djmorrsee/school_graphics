@@ -40,6 +40,9 @@
 #include "dj_scene/lighting.h"
 #include "dj_scene/motion.h"
 
+// Chunk Information
+#include "dj_scene/chunks.h"
+
 // Shader And Texture Helpers
 #include "dj_resources/shaders.h"
 #include "dj_resources/textures.h"

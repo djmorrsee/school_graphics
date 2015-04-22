@@ -31,7 +31,20 @@ void LoadObjects() {
 }
 
 void LoadTextures() {
-
+	chunk chk = CreateChunk(3);
+	printf("%i\n", chk.blocks[0][0][0].block_id);
+	printf("%i\n\n", chk.blocks[0][0][1].block_id);
+	
+	std::vector<int> ids;
+	ids = GetBlockList(chk);
+	
+	printf("%i\n", ids.at(0));
+	printf("%i\n\n", ids.at(1));
+	
+	int* vals = &ids[0];
+	printf("%i\n", vals[0]);
+	printf("%i\n\n", vals[1]);
+	
 }
 
 void SetupScene () {
