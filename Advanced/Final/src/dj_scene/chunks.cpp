@@ -59,18 +59,21 @@ std::vector<int> GetBlockList(chunk chk) {
 	return list;
 }
 
-int BindChunkTexture(chunk chk, int oldtex) {
+int BindChunkTexture(chunk chk) {
 	unsigned int tex;
-	if (oldtex > 0) {
-		tex = oldtex;
-	} else {
-		glGenTextures(1, &tex);
-	}
+	glGenTextures(1, &tex);
 	
-	glBindTexture(GL_TEXTURE_3D, tex);
+	glBindTexture(GL_TEXTURE_1D, tex);
 	
-	std::vector<int> ids = GetBlockList(chk);
+	int vals [] = {
+		1, 1, 1
+	};
 	
-	glTexImage3D(GL_TEXTURE_3D,0,3,chk.dim,chk.dim,chk.dim,0,GL_RGB,GL_UNSIGNED_BYTE, &ids[0]);
+	glTexImage1D(GL_TEXTURE_1D, 0, GL_RED, chk.dim * chk.dim * chk.dim, 0, GL_RED,GL_INT, &vals);
+	if(glGetError()) Fatal("Error Sending Texture");
+	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	
 	return tex;
 }

@@ -8,10 +8,14 @@
  */
 
 #include "../dj.h"
+#include <vector>
 
 
 // *** Scene Specific Vars *** //
-int v_block_texture_id = -1;
+int unsigned v_block_texture_id = 0;
+int v_chunk_dim = 6;
+std::vector<float> v_points;
+
 
 // Drawing Vars (specific to Ass08)
 int v_draw_color = 1;
@@ -19,9 +23,8 @@ bool v_first_draw = true;
 bool v_clear_draw = false;
 
 // Screen Dimensions
-glm::vec2 v_window_size = 
-	glm::vec2(dj_constants::c_window_size, dj_constants::c_window_size);
-	
+glm::vec2 v_window_size = glm::vec2(dj_constants::c_window_size, dj_constants::c_window_size);
+
 // Cursor Info
 int v_cursor_x = 0;
 int v_cursor_y = 0;
@@ -29,7 +32,7 @@ int v_cursor_y = 0;
 int v_cursor_down = 0;
 
 // Viewport
-float v_dim = 0.5;
+float v_dim = 1;
 float v_field_of_view = 45;
 float v_aspect_ratio = 1;
 float v_clipping_plane = 100000;

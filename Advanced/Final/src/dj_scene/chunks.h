@@ -27,5 +27,5 @@ chunk CreateChunk(int dim);
 block GetBlock(chunk chk, int x, int y, int z);
 std::vector<int> GetBlockList(chunk chk);
 
-int BindChunkTexture(chunk chk, int oldtex=-1);
+int BindChunkTexture(chunk chk);
 #endif

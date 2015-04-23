@@ -1,18 +1,17 @@
 import os
 
-
 headers = []
 env = Environment(ENV = os.environ, CPPPATH=headers)
 
+flags = ['-g', '-Wall', '-O3']
 
-Library('lib/callbacks', Glob('src/dj_callbacks/*.cpp'))
-Library('lib/cscix2329', Glob('src/dj_cscix2329/*.cpp'))
-Library('lib/globals', Glob('src/dj_globals/*.cpp'))
-Library('lib/resources', Glob('src/dj_resources/*.cpp'))
-Library('lib/scene', Glob('src/dj_scene/*.cpp'))
+Library('lib/callbacks', Glob('src/dj_callbacks/*.cpp'), CXXFLAGS=flags)
+Library('lib/cscix2329', Glob('src/dj_cscix2329/*.cpp'), CXXFLAGS=flags)
+Library('lib/globals', Glob('src/dj_globals/*.cpp'), CXXFLAGS=flags)
+Library('lib/resources', Glob('src/dj_resources/*.cpp'), CXXFLAGS=flags)
+Library('lib/scene', Glob('src/dj_scene/*.cpp'), CXXFLAGS=flags)
 
 local_libs = ['callbacks', 'globals', 'resources', 'scene', 'cscix2329']
 other_libs = ['GL', 'GLU', 'glut', 'm', 'pthread']
 
-Program('src/main.cpp', LIBS = local_libs + other_libs, LIBPATH = ['/usr/lib', '/usr/local/lib', './lib'])
-#Program('main', Glob('src/*.cpp'))
+Program('src/main.cpp', LIBS = local_libs + other_libs, LIBPATH = ['/usr/lib', '/usr/local/lib', './lib'], CXXFLAGS=['-g'])
