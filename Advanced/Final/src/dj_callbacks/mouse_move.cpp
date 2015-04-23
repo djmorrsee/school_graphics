@@ -29,7 +29,7 @@ void mouse_move(int x, int y)
 		float rotx = (float)(x - last_x) * dj_constants::c_rot_x_speed;
 		float roty = (float)(last_y - y) * dj_constants::c_rot_y_speed;
 		
-		Rotate(-roty, rotx);
+		Rotate(-roty, -rotx);
 		
 		last_x = x;
 		last_y = y;

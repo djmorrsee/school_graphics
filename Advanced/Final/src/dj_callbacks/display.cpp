@@ -36,6 +36,9 @@ void display() {
 	float *mvm = glm::value_ptr(model_view_matrix);
 	float *pm = glm::value_ptr(projection_matrix);
 	
+	glm::mat4 model_view_projection_matrix = model_view_matrix * projection_matrix;
+	float *mvpm = glm::value_ptr(model_view_projection_matrix);
+	
 	// Bind Uniforms
 	int loc = 0;
 	loc = glGetUniformLocation(v_shader_programs[0], "ModelViewMatrix");
@@ -49,13 +52,19 @@ void display() {
 		glUniformMatrix4fv(loc, 1, GL_FALSE, pm);
 	else
 		printf("Error sending PM\n");
+		
+	loc = glGetUniformLocation(v_shader_programs[0], "MVPMatrix");
+	if (loc >= 0)
+		glUniformMatrix4fv(loc, 1, GL_FALSE, mvpm);
+	else
+		printf("Error sending MVPM");
 	
 	
 	// Data Points
 	GLuint vbo;
 	glGenBuffers(1, &vbo);
 	float points [] = {
-		0.f, 0.f, 0.f,
+		1, 1, 1
 	};
 	
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -68,9 +77,9 @@ void display() {
 	GLint posAttrib = glGetAttribLocation(v_shader_programs[0], "pos");
 	glEnableVertexAttribArray(posAttrib);
 	
-	glVertexAttribPointer(posAttrib, 1, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	
-	glDrawArrays(GL_POINTS, 0, 1);
+	glDrawArrays(GL_POINTS, 0, 3);
 
 	glFlush();
 	glutSwapBuffers();
