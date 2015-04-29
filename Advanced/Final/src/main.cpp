@@ -3,10 +3,13 @@
  */
 #include "dj.h"
 #include <pthread.h>
+#include <map>
 
 void SetupGLUT(int argc, char* argv[]);
 
 int main(int argc, char* argv[]) {
+	srand(time(NULL));
+
 	
 	SetupGLUT(argc, argv);
 	return 0;
@@ -25,15 +28,7 @@ void LoadShaders() {
 }
 
 void LoadObjects() {
-	for (int i = 0; i < v_chunk_dim; ++i) {
-		for (int j = 0; j < v_chunk_dim; ++j) {
-			for (int k = 0; k < v_chunk_dim; ++k) {
-				v_points.push_back(i - (float)v_chunk_dim / 2.0f);
-				v_points.push_back(j - (float)v_chunk_dim / 2.0f);
-				v_points.push_back(k - (float)v_chunk_dim / 2.0f);
-			}	
-		}
-	}
+
 }
 
 void LoadTextures() {

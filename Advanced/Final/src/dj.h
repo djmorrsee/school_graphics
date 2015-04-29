@@ -14,6 +14,7 @@
 #include <string.h>
 #include <vector>
 #include <math.h>
+#include <map>
 
 #define GLM_FORCE_RADIANS
 
@@ -29,10 +30,6 @@
 #include <GL/glut.h>
 #endif
 
-#ifdef USEGLEW
-#include <GL/glew.h>
-#endif
-
 #define Cos(th) cos(3.1415926/180*(th))
 #define Sin(th) sin(3.1415926/180*(th))
 
@@ -41,7 +38,9 @@
 #include "dj_scene/motion.h"
 
 // Chunk Information
+#include "dj_scene/blocks.h"
 #include "dj_scene/chunks.h"
+
 
 // Shader And Texture Helpers
 #include "dj_resources/shaders.h"

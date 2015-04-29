@@ -5,27 +5,26 @@
  *      Author: djmorrsee
  */
 
-
 #ifndef __CHUNKS_H
 #define __CHUNKS_H
+
+#define MAX_CHUNK_WIDTH 8
+#define MAX_CHUNK_HEIGHT 4
 
 #include "../dj.h"
 #include <map>
 #include <vector>
 
-struct block {
-	int block_id;
-};
-
-struct chunk {
+class chunk {
 	int dim;
-	std::map<int, std::map<int, std::map<int, block> > > blocks;
+	int height;
+	std::vector<block> blocks;
+
+public:
+	chunk(int d, int h);
+	chunk();
+	std::vector<float> flatPositionMap(); // ((x,y,z),(x,y,z)) but flat...
+	std::vector<float> flatIDMap();
 };
 
-chunk CreateChunk(int dim);
-
-block GetBlock(chunk chk, int x, int y, int z);
-std::vector<int> GetBlockList(chunk chk);
-
-int BindChunkTexture(chunk chk);
 #endif

@@ -62,13 +62,33 @@ void display() {
 		glUniformMatrix4fv(loc, 1, GL_FALSE, mvpm);
 	else
 		printf("Error sending MVPM");
+		
+	std::vector<float> ids = v_main_chunk.flatIDMap();
+	float test[] = { 
+					1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
+					1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
+					1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
+					1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
+					1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 
+					1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
+					1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
+					1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
+					
+				};
+	loc = glGetUniformLocation(v_shader_programs[0], "Cube_IDs");
+	if (loc >= 0)
+		//~ glUniform1fv(loc, 1, &ids[0]);
+		glUniform1fv(loc, 256, test);
+
+	else
+		printf("Error sending IDs");
 	
 	// Texture
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_1D, v_block_texture_id);
-	loc = glGetUniformLocation(v_shader_programs[0], "chunk_sampler");
-	if (loc >= 0)
-		glUniform1i(loc, 0); // Texture ID?
+	//~ glActiveTexture(GL_TEXTURE0);
+	//~ glBindTexture(GL_TEXTURE_1D, v_block_texture_id);
+	//~ loc = glGetUniformLocation(v_shader_programs[0], "chunk_sampler");
+	//~ if (loc >= 0)
+		//~ glUniform1i(loc, 0); // Texture ID?
 	//~ elses
 		//~ printf("Error sending texture\n");
 	
@@ -78,7 +98,9 @@ void display() {
 	glGenBuffers(1, &vbo);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, v_points.size() * sizeof(float), &v_points[0], GL_STATIC_DRAW);
+	
+	std::vector<float> v = v_main_chunk.flatPositionMap();
+	glBufferData(GL_ARRAY_BUFFER, v.size() * sizeof(float), &v[0], GL_STATIC_DRAW);
 	
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
@@ -91,7 +113,7 @@ void display() {
 	
 	
 	// Draw Points
-	glDrawArrays(GL_POINTS, 0, v_chunk_dim*v_chunk_dim*v_chunk_dim);
+	glDrawArrays(GL_POINTS, 0, v_chunk_dim*v_chunk_dim*v_chunk_height);
 	
 	glUseProgram(0);
 

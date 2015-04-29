@@ -7,9 +7,9 @@
 #include <stdbool.h>
 
 // *** Scene Specific Vars *** //
-extern unsigned int v_block_texture_id;
 extern int v_chunk_dim;
-extern std::vector<float> v_points;
+extern int v_chunk_height;
+extern chunk v_main_chunk;
 
 // Draw Info
 extern int v_draw_color;

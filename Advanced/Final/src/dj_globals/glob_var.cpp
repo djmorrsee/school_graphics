@@ -12,10 +12,9 @@
 
 
 // *** Scene Specific Vars *** //
-int unsigned v_block_texture_id = 0;
-int v_chunk_dim = 6;
-std::vector<float> v_points;
-
+int v_chunk_dim = 8;
+int v_chunk_height = 4;
+chunk v_main_chunk = chunk(v_chunk_dim, v_chunk_height);
 
 // Drawing Vars (specific to Ass08)
 int v_draw_color = 1;

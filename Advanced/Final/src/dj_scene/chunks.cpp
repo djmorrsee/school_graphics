@@ -1,57 +1,40 @@
 #include "../dj.h"
 #include "chunks.h"
+#include <map>
+#include <vector>
 
-chunk CreateChunk(int dim) {
-	// Hard Coded Chunk Gen
-	if (dim != 3) {
-		exit(1);
-	}
-	chunk chk;
-	chk.dim = dim;
-	float vals[] = {
-		1, 0, 1,
-		0, 1, 0,
-		1, 0, 1,
-		
-		0, 0, 0,
-		0, 1, 0,
-		0, 0, 0,
-		
-		1, 0, 1,
-		0, 1, 0,
-		1, 0, 1,
-	};
-	std::map<int, std::map<int, std::map<int, block> > > blks;
-	for (int i = 0; i < dim; ++i) {
-		
-		std::map<int, std::map<int, block> > jb;
-		for (int j = 0; j < dim; ++j) {
-			std::map<int, block> kb;
-			for (int k = 0; k < dim; ++k) {
-				block blk;
-				blk.block_id = vals[k + dim * j + dim * dim * i];
-				
-				kb[k] = blk;
+chunk::chunk() {
+	dim = 0;
+	height = 0;
+	blocks = std::vector<block>();
+}
+
+chunk::chunk(int d, int h) {
+	dim = d;
+	height = h;
+	
+	blocks = std::vector<block>();
+
+	for(int x = 0; x < dim; ++x) {
+		for(int y = 0; y < dim; ++y) {
+			for(int z = 0; z < height; ++z) {
+				block b = block(rand() % 2);
+				blocks.push_back(b);
 			}
-			jb[j] = kb;
 		}
-		blks[i] = jb;
 	}
-	chk.blocks = blks;
-	return chk;
 }
 
-block GetBlock(chunk chk, int x, int y, int z) {
-	return chk.blocks[x][y][z];
-}
-
-std::vector<int> GetBlockList(chunk chk) {
-	int d = chk.dim;
-	std::vector<int> list;
-	for (int i = 0; i < d; ++i) {
-		for (int j = 0; j < d; ++j) {
-			for (int k = 0; k < d; ++k) {
-				list.push_back(chk.blocks[i][j][k].block_id);
+std::vector<float> chunk::flatPositionMap(){ // ((x,y,z),(x,y,z)) but flat...
+	std::vector<float> list;
+	int d_off = dim / 2.0f;
+	int h_off = height / 2.0f;
+	for (int i = 0; i < dim; ++i) {
+		for (int j = 0; j < dim; ++j) {
+			for (int k = 0; k < height; ++k) {
+				list.push_back(i);
+				list.push_back(k);
+				list.push_back(j); // Reversed x and y
 			}
 		}
 	}
@@ -59,21 +42,18 @@ std::vector<int> GetBlockList(chunk chk) {
 	return list;
 }
 
-int BindChunkTexture(chunk chk) {
-	unsigned int tex;
-	glGenTextures(1, &tex);
+std::vector<float> chunk::flatIDMap() {
+	std::vector<float> list;
 	
-	glBindTexture(GL_TEXTURE_1D, tex);
+	for (int i = 0; i < blocks.size(); ++i) {
+		list.push_back(blocks[i].GetID());
+	}
 	
-	int vals [] = {
-		1, 1, 1
-	};
-	
-	glTexImage1D(GL_TEXTURE_1D, 0, GL_RED, chk.dim * chk.dim * chk.dim, 0, GL_RED,GL_INT, &vals);
-	if(glGetError()) Fatal("Error Sending Texture");
-	
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	
-	return tex;
+	return list;
 }
+
+//~ 
+//~ block chunk::GetBlock(int x, int y, int z) {
+	//~ block* b = blocks[x][z][y];
+	//~ return block(b);
+//~ }
