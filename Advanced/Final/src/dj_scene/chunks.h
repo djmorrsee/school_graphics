@@ -8,12 +8,12 @@
 #ifndef __CHUNKS_H
 #define __CHUNKS_H
 
-#define MAX_CHUNK_WIDTH 8
-#define MAX_CHUNK_HEIGHT 4
-
 #include "../dj.h"
 #include <map>
 #include <vector>
+#include <string>
+
+void LoadChunk();
 
 class chunk {
 	int dim;

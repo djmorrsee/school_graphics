@@ -16,7 +16,6 @@ void mouse_click(int button, int state, int x, int y)
 			last_x = x;
 			last_y = y;
 			v_cursor_down = true;
-			//mouse_move(x, y);
 		} else if (state == GLUT_UP) {
 			v_cursor_down = false;
 		}

@@ -32,37 +32,7 @@ void LoadObjects() {
 }
 
 void LoadTextures() {
-	//~ chunk chk = CreateChunk(3);
-	//~ printf("%i\n", chk.blocks[0][0][0].block_id);
-	//~ printf("%i\n\n", chk.blocks[0][0][1].block_id);
-	
-	//~ std::vector<int> ids;
-	//~ ids = GetBlockList(chk);
-	
-	//~ printf("%i\n", ids.at(0));
-	//~ printf("%i\n\n", ids.at(1));
-	
-	//~ int* vals = &ids[0];
-	//~ printf("%i\n", vals[0]);
-	//~ printf("%i\n\n", vals[1]);
-	
-	//~ v_block_texture_id = BindChunkTexture(chk);
-	
-	//~ glGenTextures(1, &v_block_texture_id);
-	//~ glBindTexture(GL_TEXTURE_1D, v_block_texture_id);
-	//~ 
-	//~ int vals [] = {
-		//~ 1, 1, 1,
-		//~ 1, 1, 1,
-		//~ 1, 1, 1,
-	//~ };
-	//~ 
-	//~ glTexImage1D(GL_TEXTURE_1D, 0, GL_RED, 9, 0, GL_RED,GL_INT, vals);
-	//~ if(glGetError()) Fatal("Error Sending Texture");
-	//~ 
-	//~ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	//~ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	
+	v_textures[0] = load_texture("textures/atlas.bmp");
 }
 
 void SetupScene () {
@@ -71,7 +41,7 @@ void SetupScene () {
 	LoadObjects();
 	LoadTextures();
 	
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClearColor(0.0, 0.75, 1.0, 1.0);
 	glEnable(GL_DEPTH_TEST);
 
 }

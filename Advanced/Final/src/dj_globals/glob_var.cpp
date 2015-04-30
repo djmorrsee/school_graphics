@@ -14,6 +14,8 @@
 // *** Scene Specific Vars *** //
 int v_chunk_dim = 8;
 int v_chunk_height = 4;
+int v_chunk_type = 0;
+
 chunk v_main_chunk = chunk(v_chunk_dim, v_chunk_height);
 
 // Drawing Vars (specific to Ass08)

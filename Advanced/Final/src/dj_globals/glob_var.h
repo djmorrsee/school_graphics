@@ -10,6 +10,7 @@
 extern int v_chunk_dim;
 extern int v_chunk_height;
 extern chunk v_main_chunk;
+extern int v_chunk_type;
 
 // Draw Info
 extern int v_draw_color;
